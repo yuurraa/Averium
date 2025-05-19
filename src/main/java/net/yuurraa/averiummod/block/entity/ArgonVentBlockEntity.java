@@ -18,7 +18,7 @@ public class ArgonVentBlockEntity extends BlockEntity {
     private static final int MAX_ARGON_CAPACITY = 5;
     // Time in ticks for one unit of argon to regenerate. 20 ticks = 1 second.
     // Example: 5 minutes = 5 * 60 * 20 = 6000 ticks.
-    private static final int TICKS_PER_REGEN = 20 * 5; // 5 minutes
+    private static final int TICKS_PER_REGEN = 20 * 60; // 5 minutes
 
     private int remaining = MAX_ARGON_CAPACITY;
     private int regenerationCooldown = 0;
