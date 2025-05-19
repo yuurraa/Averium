@@ -22,7 +22,9 @@ public class ModCreativeModTabs {
 
                         pOutput.accept(ModItems.RAW_CRYTHON.get());
                         pOutput.accept(ModItems.CRYTHON.get());
+
                         pOutput.accept(ModItems.GOLD_REINFORCED_STICK.get());
+                        pOutput.accept(ModItems.BOTTLED_ARGON.get());
                     })
                     .build());
 

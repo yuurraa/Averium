@@ -19,7 +19,7 @@ public class ModBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, AveriumMod.MOD_ID);
 
     public static final RegistryObject<Block> ARGON_VENT = registerBlock("argon_vent",
-            () -> new ArgonVentBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE)));
+            () -> new ArgonVentBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE).requiresCorrectToolForDrops()));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {

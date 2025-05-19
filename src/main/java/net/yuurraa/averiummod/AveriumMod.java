@@ -13,6 +13,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.yuurraa.averiummod.block.ModBlocks;
+import net.yuurraa.averiummod.block.entity.ModBlockEntities;
 import net.yuurraa.averiummod.item.ModCreativeModTabs;
 import net.yuurraa.averiummod.item.ModItems;
 import net.yuurraa.averiummod.particle.ModParticles;
@@ -34,6 +35,7 @@ public class AveriumMod
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
         ModParticles.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
