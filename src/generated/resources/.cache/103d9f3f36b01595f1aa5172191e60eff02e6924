@@ -1,0 +1,4 @@
+// 1.20.1	2025-05-19T22:34:30.0493229	Registries
+7f72308e2e66cf958c5ccb6d65d6910b09c003cd data/averiummod/forge/biome_modifier/add_argon_vent.json
+77372b8a7115633b38c3da37e3bd0de4074afa89 data/averiummod/worldgen/configured_feature/argon_vent_ore.json
+4804457ea2a09a9403d08d99f4351c11b2be4576 data/averiummod/worldgen/placed_feature/argon_vent_placed.json

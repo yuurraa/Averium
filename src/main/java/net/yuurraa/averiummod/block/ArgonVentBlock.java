@@ -15,6 +15,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraftforge.api.distmarker.Dist;
@@ -22,42 +24,60 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.util.RandomSource;
 
 import net.yuurraa.averiummod.block.entity.ArgonVentBlockEntity;
+import net.yuurraa.averiummod.block.entity.ModBlockEntities;
 import net.yuurraa.averiummod.particle.ModParticles;
 import net.yuurraa.averiummod.item.ModItems;
 import net.minecraft.core.Direction;
 
-/**
- * ArgonVentBlock now implements EntityBlock so it can create
- * and interact with its corresponding BlockEntity.
- */
+import javax.annotation.Nullable;
+
 public class ArgonVentBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public ArgonVentBlock(BlockBehaviour.Properties props) {
         super(props);
-        // set default facing
-        this.registerDefaultState(this.stateDefinition.any()
-                .setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return this.defaultBlockState()
-                .setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
-    /** Create the BlockEntity when this block is placed. */
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new ArgonVentBlockEntity(pos, state);
     }
 
-    /** Only emit particles if the BlockEntity still has Argon remaining. */
+    // Provide the ticker for the BlockEntity
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        // We only want server-side ticking for regeneration
+        if (level.isClientSide()) {
+            return null;
+        }
+
+        // Get the specific BlockEntityType for ArgonVentBlockEntity
+        BlockEntityType<ArgonVentBlockEntity> expectedType = ModBlockEntities.ARGON_VENT.get();
+        // The ticker function for ArgonVentBlockEntity
+        BlockEntityTicker<ArgonVentBlockEntity> argonVentTicker = ArgonVentBlockEntity::tick;
+
+        // Manually replicate the logic of EntityBlock.createTickerHelper
+        if (blockEntityType == expectedType) {
+            // This cast is safe because we've confirmed blockEntityType is the expectedType.
+            // The type T in this context will be ArgonVentBlockEntity.
+            return (BlockEntityTicker<T>) argonVentTicker;
+        } else {
+            return null;
+        }
+    }
+
     @OnlyIn(Dist.CLIENT)
     @Override
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource rand) {
@@ -66,51 +86,45 @@ public class ArgonVentBlock extends Block implements EntityBlock {
             return;
         }
         if (world.isEmptyBlock(pos.above())) {
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 4; i++) {
                 double x = pos.getX() + rand.nextDouble();
-                double y = pos.getY() + 1.01;
+                double y = pos.getY() + 1.01D;
                 double z = pos.getZ() + rand.nextDouble();
                 world.addParticle(
                         ModParticles.ARGON_SMOKE.get(),
                         x, y, z,
-                        0, 0.01 + rand.nextDouble() * 0.01, 0
+                        0, 0.01 + rand.nextDouble() * 0.015, 0
                 );
             }
         }
     }
 
-    /**
-     * Right‑click (use) the vent with a glass bottle to collect one unit of Argon:
-     * - Decrement the BlockEntity’s reservoir
-     * - Consume the bottle and give Bottled Argon
-     */
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos,
                                  Player player, InteractionHand hand, BlockHitResult hit) {
         if (world.isClientSide) {
-            // only short‑circuit if they’re holding a bottle
-            ItemStack held = player.getItemInHand(hand);
-            if (held.getItem() == Items.GLASS_BOTTLE) {
-                return InteractionResult.SUCCESS;
-            }
-            return InteractionResult.PASS;
+            return player.getItemInHand(hand).getItem() == Items.GLASS_BOTTLE ? InteractionResult.sidedSuccess(true) : InteractionResult.PASS;
         }
 
-        ItemStack held = player.getItemInHand(hand);
-        if (held.getItem() == Items.GLASS_BOTTLE) {
+        ItemStack heldItemStack = player.getItemInHand(hand);
+        if (heldItemStack.getItem() == Items.GLASS_BOTTLE) {
             BlockEntity be = world.getBlockEntity(pos);
             if (be instanceof ArgonVentBlockEntity vent && vent.hasArgon()) {
-                // collect one unit
                 vent.collectOne();
-                BlockState newState = world.getBlockState(pos);
-                world.sendBlockUpdated(pos, newState, newState, 3);
-                // consume empty bottle
-                held.shrink(1);
-                // give bottled argon
-                player.addItem(new ItemStack(ModItems.BOTTLED_ARGON.get()));
+
+                if (!player.getAbilities().instabuild) {
+                    heldItemStack.shrink(1);
+                }
+
+                ItemStack bottledArgonStack = new ItemStack(ModItems.BOTTLED_ARGON.get());
+                if (!player.addItem(bottledArgonStack)) {
+                    player.drop(bottledArgonStack, false);
+                }
                 return InteractionResult.CONSUME;
+            } else {
+                return InteractionResult.FAIL;
             }
         }
-        return super.use(state, world, pos, player, hand, hit);
+        return InteractionResult.PASS;
     }
 }

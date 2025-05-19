@@ -11,18 +11,10 @@
       ],
       "conditions": [
         {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "enchantments": [
-              {
-                "enchantment": "minecraft:silk_touch",
-                "levels": { "min": 1 }
-              }
-            ]
-          }
+          "condition": "minecraft:match_tool"
         }
       ],
-      "rolls": 1.0
+      "rolls": 0.0
     }
   ],
   "random_sequence": "averiummod:blocks/argon_vent"

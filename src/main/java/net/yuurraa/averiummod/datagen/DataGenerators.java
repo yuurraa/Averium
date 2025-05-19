@@ -1,0 +1,33 @@
+package net.yuurraa.averiummod.datagen;
+
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.yuurraa.averiummod.AveriumMod;
+
+import java.util.concurrent.CompletableFuture;
+
+@Mod.EventBusSubscriber(modid = AveriumMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+public class DataGenerators {
+
+    @SubscribeEvent
+    public static void gatherData(GatherDataEvent event) {
+        DataGenerator generator = event.getGenerator();
+        PackOutput packOutput = generator.getPackOutput();
+        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+
+        // Add our worldgen provider to the data generator
+        generator.addProvider(event.includeServer(), new ModWorldGenProvider(packOutput, lookupProvider));
+
+        // If you have other data generators (like for recipes, block states, item models),
+        // you would add them here as well. For example:
+        // generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput));
+        // generator.addProvider(event.includeClient(), new ModBlockStateProvider(packOutput, existingFileHelper));
+        // generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));
+    }
+}
