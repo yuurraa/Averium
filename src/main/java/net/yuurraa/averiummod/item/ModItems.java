@@ -11,6 +11,8 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, AveriumMod.MOD_ID);
 
+    public static final RegistryObject<Item> RAW_CRYTHON = ITEMS.register("raw_crython",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> CRYTHON = ITEMS.register("crython",
             () -> new Item(new Item.Properties()));
 

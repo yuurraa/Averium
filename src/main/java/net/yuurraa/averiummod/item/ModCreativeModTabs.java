@@ -18,6 +18,7 @@ public class ModCreativeModTabs {
                     .title(Component.translatable("creativetab.averium_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModItems.CRYTHON.get());
+                        pOutput.accept(ModItems.RAW_CRYTHON.get());
                     })
                     .build());
 
