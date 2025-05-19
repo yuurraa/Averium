@@ -1,0 +1,8 @@
+// 1.20.1	2025-05-20T00:04:20.9171627	Tags for minecraft:block mod id averiummod
+136fe69abae4ca608c64e52eb873312f2323b5a4 data/averiummod/tags/blocks/ores/crython.json
+136fe69abae4ca608c64e52eb873312f2323b5a4 data/forge/tags/blocks/needs_netherite_tool.json
+136fe69abae4ca608c64e52eb873312f2323b5a4 data/forge/tags/blocks/ores.json
+50c35a119bd6f5f6604631d0c10d7c5899ce2438 data/forge/tags/blocks/ores_in_ground/deepslate.json
+957e3e56feb2e2ba5e80f8fcf9ed1669869c875a data/forge/tags/blocks/ores_in_ground/stone.json
+63999823225cb512d698925824fce4d13e46645f data/minecraft/tags/blocks/mineable/pickaxe.json
+d03c0dc9ac25a17dfa5e3e6bab68da9c11f8527f data/minecraft/tags/blocks/needs_stone_tool.json

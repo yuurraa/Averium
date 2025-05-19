@@ -1,10 +1,13 @@
+// src/main/java/net/yuurraa/averiummod/block/ModBlocks.java
 package net.yuurraa.averiummod.block;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -18,8 +21,27 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, AveriumMod.MOD_ID);
 
+    // ARGON VENT
     public static final RegistryObject<Block> ARGON_VENT = registerBlock("argon_vent",
             () -> new ArgonVentBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE).requiresCorrectToolForDrops()));
+
+    // CRYTHON ORE
+    public static final RegistryObject<Block> CRYTHON_ORE = registerBlock("crython_ore",
+            () -> new CrythonOreBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE) // Or a custom color
+                    .instrument(net.minecraft.world.level.block.state.properties.NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(30.0F, 1200.0F) // Very hard, very blast resistant (like Ancient Debris)
+                    .sound(SoundType.STONE)
+            ));
+    public static final RegistryObject<Block> DEEPSLATE_CRYTHON_ORE = registerBlock("deepslate_crython_ore",
+            () -> new CrythonOreBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.DEEPSLATE) // Or a custom color
+                    .instrument(net.minecraft.world.level.block.state.properties.NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(45.0F, 1200.0F) // Even harder, very blast resistant
+                    .sound(SoundType.DEEPSLATE)
+            ));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {

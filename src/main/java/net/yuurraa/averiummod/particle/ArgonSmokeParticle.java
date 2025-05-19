@@ -1,3 +1,4 @@
+// src/main/java/net/yuurraa/averiummod/particle/ArgonSmokeParticle.java
 package net.yuurraa.averiummod.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;

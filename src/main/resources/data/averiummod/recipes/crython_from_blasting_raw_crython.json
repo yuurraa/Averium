@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:blasting",
-  "ingredient": {
-    "item": "averiummod:raw_crython"
-  },
-  "result": "averiummod:crython",
-  "experience": 0.7,
-  "cookingtime": 100
-}

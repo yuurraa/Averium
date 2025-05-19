@@ -1,3 +1,4 @@
+// src/main/java/net/yuurraa/averiummod/item/ModItems.java
 package net.yuurraa.averiummod.item;
 
 import net.minecraft.world.item.Item;

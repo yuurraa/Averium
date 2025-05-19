@@ -1,3 +1,5 @@
+// src/main/java/net/yuurraa/averiummod/datagen/ModWorldGenProvider.java
+
 package net.yuurraa.averiummod.datagen;
 
 import net.minecraft.core.HolderLookup;

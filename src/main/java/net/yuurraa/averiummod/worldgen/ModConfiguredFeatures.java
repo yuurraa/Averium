@@ -1,3 +1,4 @@
+// src/main/java/net/yuurraa/averiummod/worldgen/ModConfiguredFeatures.java
 package net.yuurraa.averiummod.worldgen;
 
 import net.minecraft.core.registries.Registries;
@@ -16,21 +17,37 @@ import net.yuurraa.averiummod.block.ModBlocks;
 import java.util.List;
 
 public class ModConfiguredFeatures {
+    // ARGON_VENT
     public static final ResourceKey<ConfiguredFeature<?, ?>> ARGON_VENT =
             registerKey("argon_vent_ore");
 
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
-        // 1. Define where we can replace blocks (deepslate ore replaceables)
-        RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
+    // CRYTHON_ORE
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CRYTHON_ORE =
+            registerKey("crython_ore");
 
-        // 2. Create an OreConfiguration: target=deepslate, state=our block, size=5
-        OreConfiguration config = new OreConfiguration(
+    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+        // ARGON_VENT (existing)
+        RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
+        OreConfiguration argonVentConfig = new OreConfiguration(
                 List.of(OreConfiguration.target(deepslateReplaceables, ModBlocks.ARGON_VENT.get().defaultBlockState())),
-                6  // vein size
+                6 // Argon Vent vein size
+        );
+        register(context, ARGON_VENT, Feature.ORE, argonVentConfig);
+
+
+        // CRYTHON_ORE
+        RuleTest stoneReplaceables = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
+        // RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES); // already defined
+
+        List<OreConfiguration.TargetBlockState> crythonOres = List.of(
+                OreConfiguration.target(stoneReplaceables, ModBlocks.CRYTHON_ORE.get().defaultBlockState()),
+                OreConfiguration.target(deepslateReplaceables, ModBlocks.DEEPSLATE_CRYTHON_ORE.get().defaultBlockState())
         );
 
-        // 3. Register the configured feature under our key
-        register(context, ARGON_VENT, Feature.ORE, config);
+        // Vein size for Crython Ore - should be small as it's rare.
+        // Diamonds are often 4-8. Let's try 3.
+        OreConfiguration crythonOreConfig = new OreConfiguration(crythonOres, 3); // Vein size of 3
+        register(context, CRYTHON_ORE, Feature.ORE, crythonOreConfig);
     }
 
     private static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {

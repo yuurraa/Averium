@@ -1,3 +1,4 @@
+// src/main/java/net/yuurraa/averiummod/AveriumMod.java
 package net.yuurraa.averiummod;
 
 import com.mojang.logging.LogUtils;

@@ -1,3 +1,4 @@
+// src/main/java/net/yuurraa/averiummod/particle/ModParticles.java
 package net.yuurraa.averiummod.particle;
 
 import net.minecraft.core.particles.ParticleType;

@@ -1,5 +1,7 @@
 {
   "block.averiummod.argon_vent": "Argon Vent",
+  "block.averiummod.crython_ore": "Crython Ore",
+  "block.averiummod.deepslate_crython_ore": "Deepslate Crython Ore",
 
   "item.averiummod.raw_crython": "Raw Crython",
   "item.averiummod.crython": "Crython",

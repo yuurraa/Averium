@@ -1,3 +1,4 @@
+// src/main/java/net/yuurraa/averiummod/item/ModCreativeModTabs.java
 package net.yuurraa.averiummod.item;
 
 import net.minecraft.core.registries.Registries;
@@ -19,6 +20,8 @@ public class ModCreativeModTabs {
                     .title(Component.translatable("creativetab.averium_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModBlocks.ARGON_VENT.get());
+                        pOutput.accept(ModBlocks.CRYTHON_ORE.get());
+                        pOutput.accept(ModBlocks.DEEPSLATE_CRYTHON_ORE.get());
 
                         pOutput.accept(ModItems.RAW_CRYTHON.get());
                         pOutput.accept(ModItems.CRYTHON.get());

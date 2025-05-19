@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#forge:is_snowy",
+  "features": "averiummod:crython_ore_placed",
+  "step": "underground_ores"
+}

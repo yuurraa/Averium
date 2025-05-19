@@ -1,13 +1,14 @@
+// src/main/java/net/yuurraa/averiummod/worldgen/ModPlacedFeatures.java
 package net.yuurraa.averiummod.worldgen;
 
-import net.minecraft.core.Direction; // Import this
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
-import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate; // Import this
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.yuurraa.averiummod.AveriumMod;
@@ -15,29 +16,48 @@ import net.yuurraa.averiummod.AveriumMod;
 import java.util.List;
 
 public class ModPlacedFeatures {
-    public static final ResourceKey<PlacedFeature> ARGON_VENT_PLACED =
+    // ARGON_VENT (existing)
+    public static final ResourceKey<PlacedFeature> ARGON_VENT_PLACED = // Renamed for clarity
             registerKey("argon_vent_placed");
 
+    // CRYTHON_ORE
+    public static final ResourceKey<PlacedFeature> CRYTHON_ORE_PLACED =
+            registerKey("crython_ore_placed");
+
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
-        Holder.Reference<ConfiguredFeature<?, ?>> oreFeatureHolder = context.lookup(Registries.CONFIGURED_FEATURE)
-                .getOrThrow(ModConfiguredFeatures.ARGON_VENT);
+        Holder.Reference<ConfiguredFeature<?, ?>> argonVentConfigured = context.lookup(Registries.CONFIGURED_FEATURE)
+                .getOrThrow(ModConfiguredFeatures.ARGON_VENT); // Use updated key
+        Holder.Reference<ConfiguredFeature<?, ?>> crythonOreConfigured = context.lookup(Registries.CONFIGURED_FEATURE)
+                .getOrThrow(ModConfiguredFeatures.CRYTHON_ORE);
 
-        // Placement modifiers:
-        var modifiers = List.of(
-                CountPlacement.of(8), // Attempts per chunk. Adjust as needed.
-                InSquarePlacement.spread(), // Spreads the placement horizontally within the chunk.
-                HeightRangePlacement.uniform( // Defines the Y-level range. Deepslate is roughly Y=0 down to Y=-64.
+        // ARGON_VENT PLACEMENT (existing, using your values)
+        var argonVentModifiers = List.of(
+                CountPlacement.of(8),
+                InSquarePlacement.spread(),
+                HeightRangePlacement.uniform(
                         VerticalAnchor.absolute(-64),
-                        VerticalAnchor.absolute(0)  // You had -16, 0 allows it a bit higher in deepslate layers. Adjust if preferred.
+                        VerticalAnchor.absolute(0)
                 ),
-                // This tries to ensure that the block directly above the placement position is air.
-                // This increases the chance of the vent being exposed on its top side.
-                // For a vein of size 5, this checks the origin of the vein.
                 EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.ONLY_IN_AIR_PREDICATE, 1),
-                BiomeFilter.biome() // Necessary filter for biome modifiers to work correctly.
+                BiomeFilter.biome()
         );
+        register(context, ARGON_VENT_PLACED, argonVentConfigured, argonVentModifiers);
 
-        register(context, ARGON_VENT_PLACED, oreFeatureHolder, modifiers);
+
+        // CRYTHON_ORE PLACEMENT
+        // More sparse than diamonds. Diamonds typically have a CountPlacement around 7.
+        // For "more sparse", let's try CountPlacement of 1 or 2.
+        var crythonOreModifiers = List.of(
+                CountPlacement.of(2), // Very few attempts per chunk
+                InSquarePlacement.spread(),
+                // Diamond Y-level distribution: triangle shape, peak at bottom of world.
+                HeightRangePlacement.triangle(
+                        VerticalAnchor.absolute(-64), // Bottom anchor
+                        VerticalAnchor.absolute(16)   // Top anchor, similar to diamonds
+                ),
+                BiomeFilter.biome() // Essential for biome-specific placement via BiomeModifiers
+        );
+        register(context, CRYTHON_ORE_PLACED, crythonOreConfigured, crythonOreModifiers);
     }
 
     private static ResourceKey<PlacedFeature> registerKey(String name) {

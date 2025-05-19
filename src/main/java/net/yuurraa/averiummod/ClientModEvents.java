@@ -1,3 +1,4 @@
+// src/main/java/net/yuurraa/averiummod/ClientModEvents.java
 package net.yuurraa.averiummod;
 
 import net.minecraftforge.api.distmarker.Dist;

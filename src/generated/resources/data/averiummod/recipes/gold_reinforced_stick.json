@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " GS",
+    "GLG",
+    "SG "
+  ],
+  "result": {
+    "item": "averiummod:gold_reinforced_stick"
+  },
+  "show_notification": true
+}
