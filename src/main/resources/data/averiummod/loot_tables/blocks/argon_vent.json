@@ -2,9 +2,12 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1,
+      "bonus_rolls": 0.0,
       "entries": [
-        { "type": "minecraft:item", "name": "averiummod:argon_vent" }
+        {
+          "type": "minecraft:item",
+          "name": "averiummod:argon_vent"
+        }
       ],
       "conditions": [
         {
@@ -18,7 +21,9 @@
             ]
           }
         }
-      ]
+      ],
+      "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "averiummod:blocks/argon_vent"
 }
