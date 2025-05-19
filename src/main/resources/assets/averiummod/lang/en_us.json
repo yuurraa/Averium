@@ -1,6 +1,12 @@
 {
+  "block.averiummod.argon_vent": "Argon Vent",
+
   "item.averiummod.raw_crython": "Raw Crython",
   "item.averiummod.crython": "Crython",
+
+  "item.averiummod.gold_reinforced_stick": "Gold-Reinforced Stick",
+
+  "particle.averiummod.argon_smoke": "Argon",
 
   "creativetab.averium_tab": "Averium"
 }

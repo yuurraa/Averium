@@ -12,8 +12,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.yuurraa.averiummod.block.ModBlocks;
 import net.yuurraa.averiummod.item.ModCreativeModTabs;
 import net.yuurraa.averiummod.item.ModItems;
+import net.yuurraa.averiummod.particle.ModParticles;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -31,6 +33,8 @@ public class AveriumMod
         ModCreativeModTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
+        ModParticles.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
