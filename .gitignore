@@ -26,6 +26,7 @@ forge*changelog.txt
 
 # Gradle
 .gradle/
+gradle/wrapper
 build/
 gradle-user-home/ # In case you set gradle user home locally, though typically ~/.gradle
 
