@@ -10,6 +10,7 @@ Features include:
 - Curios! Yay!
 - Why am I on fire in the Nether? (You tell me)
 - Items in your inventory hate you.
+- Environmental hazards.
 
 ## Dependencies (Specific Versions)
 - Forge v47.4.0 (Until I learn Fabric or something)
