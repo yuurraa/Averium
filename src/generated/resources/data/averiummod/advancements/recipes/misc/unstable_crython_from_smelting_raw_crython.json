@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "averiummod:crython_from_blasting_raw_crython"
+        "recipe": "averiummod:unstable_crython_from_smelting_raw_crython"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "averiummod:crython_from_blasting_raw_crython"
+      "averiummod:unstable_crython_from_smelting_raw_crython"
     ]
   },
   "sends_telemetry_event": false

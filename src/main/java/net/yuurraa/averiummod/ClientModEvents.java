@@ -5,6 +5,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.yuurraa.averiummod.particle.CryoParticle;
 import net.yuurraa.averiummod.particle.ModParticles;
 import net.yuurraa.averiummod.particle.ArgonSmokeParticle;
 
@@ -15,7 +16,9 @@ public class ClientModEvents {
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(
                 ModParticles.ARGON_SMOKE.get(),
-                ArgonSmokeParticle.Factory::new
-        );
+                ArgonSmokeParticle.Factory::new);
+        event.registerSpriteSet(
+                ModParticles.CRYO_PARTICLE.get(),
+                CryoParticle.Factory::new);
     }
 }

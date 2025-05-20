@@ -1,3 +1,4 @@
+// src/main/java/net/yuurraa/averiummod/block/entity/ModBlockEntities.java
 package net.yuurraa.averiummod.block.entity;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;

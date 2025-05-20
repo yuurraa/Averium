@@ -16,15 +16,18 @@ public class ModCreativeModTabs {
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, AveriumMod.MOD_ID);
 
     public static final RegistryObject<CreativeModeTab> AVERIUM_TAB = CREATIVE_MODE_TABS.register("averium_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.CRYTHON.get()))
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.STABLE_CRYTHON.get()))
                     .title(Component.translatable("creativetab.averium_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModBlocks.ARGON_VENT.get());
                         pOutput.accept(ModBlocks.CRYTHON_ORE.get());
                         pOutput.accept(ModBlocks.DEEPSLATE_CRYTHON_ORE.get());
 
+                        pOutput.accept(ModItems.INERT_CHARM.get());
+
                         pOutput.accept(ModItems.RAW_CRYTHON.get());
-                        pOutput.accept(ModItems.CRYTHON.get());
+                        pOutput.accept(ModItems.UNSTABLE_CRYTHON.get());
+                        pOutput.accept(ModItems.STABLE_CRYTHON.get());
 
                         pOutput.accept(ModItems.GOLD_REINFORCED_STICK.get());
                         pOutput.accept(ModItems.BOTTLED_ARGON.get());

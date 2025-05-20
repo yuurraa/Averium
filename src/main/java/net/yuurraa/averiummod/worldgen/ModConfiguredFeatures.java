@@ -30,7 +30,7 @@ public class ModConfiguredFeatures {
         RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
         OreConfiguration argonVentConfig = new OreConfiguration(
                 List.of(OreConfiguration.target(deepslateReplaceables, ModBlocks.ARGON_VENT.get().defaultBlockState())),
-                6 // Argon Vent vein size
+                4 // Argon Vent vein size
         );
         register(context, ARGON_VENT, Feature.ORE, argonVentConfig);
 

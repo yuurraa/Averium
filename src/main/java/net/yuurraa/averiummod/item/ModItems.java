@@ -13,13 +13,19 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, AveriumMod.MOD_ID);
 
-    // Ores and Ingots
+    // Equipable
+    public static final RegistryObject<Item> INERT_CHARM = ITEMS.register("inert_charm",
+            () -> new InertCharmItem(new Item.Properties().stacksTo(1)));
+
+    // Crython
     public static final RegistryObject<Item> RAW_CRYTHON = ITEMS.register("raw_crython",
             () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> CRYTHON = ITEMS.register("crython",
+    public static final RegistryObject<Item> UNSTABLE_CRYTHON = ITEMS.register("unstable_crython",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STABLE_CRYTHON = ITEMS.register("stable_crython",
             () -> new Item(new Item.Properties()));
 
-    // Craftables
+    // Processable
     public static final RegistryObject<Item> GOLD_REINFORCED_STICK = ITEMS.register("gold_reinforced_stick",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> BOTTLED_ARGON = ITEMS.register("bottled_argon",

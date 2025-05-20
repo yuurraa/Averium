@@ -14,7 +14,12 @@ public class ModParticles {
             DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, AveriumMod.MOD_ID);
 
     public static final RegistryObject<SimpleParticleType> ARGON_SMOKE =
-            PARTICLES.register("argon_smoke", () -> new SimpleParticleType(false));
+            PARTICLES.register("argon_smoke", () -> new SimpleParticleType(false)); // false = doesn't override Limiter
+
+    // NEW: Cryo Particle
+    // Setting 'true' for overrideLimiter means it's an "important" particle, less likely to be skipped by particle limiter.
+    public static final RegistryObject<SimpleParticleType> CRYO_PARTICLE =
+            PARTICLES.register("cryo_particle", () -> new SimpleParticleType(true));
 
     public static void register(IEventBus eventBus) {
         PARTICLES.register(eventBus);

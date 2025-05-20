@@ -27,8 +27,8 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.DEEPSLATE_CRYTHON_ORE.get())
                 .add(ModBlocks.ARGON_VENT.get()); // Argon Vent is also pickaxe mineable
 
-        // Tag Crython Ores as needing Netherite tool (existing)
-        this.tag(Tags.Blocks.NEEDS_NETHERITE_TOOL)
+        // Tag Crython Ores as needing Diamond tool (existing)
+        this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(ModBlocks.CRYTHON_ORE.get())
                 .add(ModBlocks.DEEPSLATE_CRYTHON_ORE.get());
 

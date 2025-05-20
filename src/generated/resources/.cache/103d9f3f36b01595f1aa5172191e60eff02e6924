@@ -1,7 +1,7 @@
-// 1.20.1	2025-05-19T23:38:32.4682226	Registries
+// 1.20.1	2025-05-20T17:32:55.7466277	Registries
 7f72308e2e66cf958c5ccb6d65d6910b09c003cd data/averiummod/forge/biome_modifier/add_argon_vent.json
 a9d589f12e55b19a96307eec3da902a5270f49d7 data/averiummod/forge/biome_modifier/add_crython_ore.json
-77372b8a7115633b38c3da37e3bd0de4074afa89 data/averiummod/worldgen/configured_feature/argon_vent_ore.json
+03533efd26ecd322c55f351cb1712891d291cb36 data/averiummod/worldgen/configured_feature/argon_vent_ore.json
 10798f0f2941324112feff65868d9a916af8b9fe data/averiummod/worldgen/configured_feature/crython_ore.json
-4804457ea2a09a9403d08d99f4351c11b2be4576 data/averiummod/worldgen/placed_feature/argon_vent_placed.json
-8e900d5f6f03e08a43818ead55ff084dc7d1a6c5 data/averiummod/worldgen/placed_feature/crython_ore_placed.json
+0f0a4d499157646d96d505a8f140911652ff1f6b data/averiummod/worldgen/placed_feature/argon_vent_placed.json
+18947e6a5c50f720090ea52cc4cc229427769b3f data/averiummod/worldgen/placed_feature/crython_ore_placed.json

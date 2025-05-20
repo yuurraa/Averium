@@ -1,6 +1,30 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
+    "has_amethyst_shard": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:amethyst_shard"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_bottled_argon": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "averiummod:bottled_argon"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_gold_ingot": {
       "conditions": {
         "items": [
@@ -13,24 +37,24 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_leather": {
+    "has_obsidian": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:leather"
+              "minecraft:obsidian"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_stick": {
+    "has_string": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:stick"
+              "minecraft:string"
             ]
           }
         ]
@@ -39,22 +63,24 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "averiummod:gold_reinforced_stick"
+        "recipe": "averiummod:inert_charm_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
+      "has_bottled_argon",
       "has_gold_ingot",
-      "has_stick",
-      "has_leather",
+      "has_string",
+      "has_obsidian",
+      "has_amethyst_shard",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "averiummod:gold_reinforced_stick"
+      "averiummod:inert_charm_crafting"
     ]
   },
   "sends_telemetry_event": false

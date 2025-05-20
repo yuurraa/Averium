@@ -32,7 +32,7 @@ public class ModPlacedFeatures {
 
         // ARGON_VENT PLACEMENT (existing, using your values)
         var argonVentModifiers = List.of(
-                CountPlacement.of(8),
+                CountPlacement.of(7),
                 InSquarePlacement.spread(),
                 HeightRangePlacement.uniform(
                         VerticalAnchor.absolute(-64),
