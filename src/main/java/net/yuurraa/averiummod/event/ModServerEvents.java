@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = AveriumMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModServerEvents {
-
     // --- Proximity Effect Constants ---
     private static final int CRYTHON_PROXIMITY_SLOWNESS_RADIUS = 4;
     private static final int CRYTHON_PROXIMITY_SLOWNESS_DURATION = 60;
@@ -33,7 +32,6 @@ public class ModServerEvents {
 
     private static final int INFERNIUM_PROXIMITY_ABLAZE_RADIUS = 3;
     private static final int INFERNIUM_PROXIMITY_ABLAZE_SECONDS = 3;
-    private static final int INFERNIUM_PROXIMITY_CHECK_INTERVAL = 40; // Approx every 2 seconds
 
     // --- Inventory Effect Constants & Item Sets (as before) ---
     private static final Set<RegistryObject<Item>> CRYTHON_HAZARDOUS_ITEMS_ROBJS = Set.of(
@@ -99,9 +97,8 @@ public class ModServerEvents {
                 }
 
                 // Infernium Ore Proximity Ablaze
-                // Adjusted to use player.tickCount % INFERNIUM_PROXIMITY_CHECK_INTERVAL if you want different intervals
                 // For simplicity here, using the same 20-tick interval as Crython proximity.
-                if (!hasObsidianStake && !player.isCreative() && !player.isSpectator() && !player.fireImmune()) { // <--- ADD CHARM CHECK HERE
+                if (!hasObsidianStake && !player.isCreative() && !player.isSpectator() && !player.fireImmune()) {
                     boolean nearInferniumOre = checkNearbyBlocks(player, level,
                             Set.of(ModBlocks.INFERNIUM_ORE.get()),
                             INFERNIUM_PROXIMITY_ABLAZE_RADIUS);

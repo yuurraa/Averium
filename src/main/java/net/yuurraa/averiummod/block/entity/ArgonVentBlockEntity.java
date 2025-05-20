@@ -25,7 +25,7 @@ public class ArgonVentBlockEntity extends BlockEntity {
 
     // Nausea effect settings
     private static final double NAUSEA_DETECTION_RADIUS = 3.5D;
-    private static final int NAUSEA_EXPOSURE_THRESHOLD_TICKS = 20 * 6; // 7 seconds of initial exposure
+    private static final int NAUSEA_EXPOSURE_THRESHOLD_TICKS = 20 * 6; // 6 seconds of initial exposure
     // Duration of nausea effect applied/refreshed. Should be > 1 tick.
     // e.g., 60 ticks (3 seconds) will ensure it feels continuous if re-applied often.
     private static final int NAUSEA_EFFECT_DURATION_TICKS = 20 * 4; // 4 seconds duration for each application/refresh

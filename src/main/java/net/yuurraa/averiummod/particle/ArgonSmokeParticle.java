@@ -17,12 +17,10 @@ public class ArgonSmokeParticle extends TextureSheetParticle {
         this.setAlpha(0.9f);
         this.pickSprite(sprites);
 
-        // Override lateral velocity to keep it mostly vertical
         this.xd = 0;
         this.zd = 0;
-        this.yd = 0.01 + this.random.nextDouble() * 0.06; // gentle float upward
+        this.yd = 0.01 + this.random.nextDouble() * 0.06;
 
-        // Set a random initial rotation (roll)
         this.roll = this.random.nextFloat() * ((float) Math.PI * 2);
         this.oRoll = this.roll;
     }
@@ -30,13 +28,14 @@ public class ArgonSmokeParticle extends TextureSheetParticle {
     @Override
     public void tick() {
         super.tick();
-        this.setAlpha(Math.max(0f, this.alpha - 0.015f)); // Fade slowly
+        this.setAlpha(Math.max(0f, this.alpha - 0.015f));
     }
 
     @Override
     public @NotNull ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
+    // End Constructor
 
     public static class Factory implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet sprites;
@@ -50,7 +49,7 @@ public class ArgonSmokeParticle extends TextureSheetParticle {
                                        double x, double y, double z,
                                        double vx, double vy, double vz) {
             ArgonSmokeParticle particle = new ArgonSmokeParticle(level, x, y, z, vx, vy, vz, this.sprites);
-            particle.setColor(0.0f, 0.0f, 0.5f); // Dark blue color
+            particle.setColor(0.6f, 0.2f, 0.8f); // Example: A nice purple
             return particle;
         }
     }

@@ -51,11 +51,20 @@ public class AveriumJEIPlugin implements IModPlugin {
                 Component.translatable("jei.averiummod.info.bottled_argon.line2")
         );
 
-        // Add info to Glass Bottle about its use with Argon Vents
+        // --- How to obtain Bottled Xenon ---
+        registration.addIngredientInfo(
+                new ItemStack(ModItems.BOTTLED_XENON.get()), // The item this info is about
+                VanillaTypes.ITEM_STACK, // The type of the ingredient
+                Component.translatable("jei.averiummod.info.bottled_xenon.line1"),
+                Component.translatable("jei.averiummod.info.bottled_xenon.line2")
+        );
+
+        // Add info to Glass Bottle about its use with vents
         registration.addIngredientInfo(
                 new ItemStack(Items.GLASS_BOTTLE),
                 VanillaTypes.ITEM_STACK,
-                Component.translatable("jei.averiummod.info.glass_bottle.argon_vent")
+                Component.translatable("jei.averiummod.info.glass_bottle.argon_vent"),
+                Component.translatable("jei.averiummod.info.glass_bottle.xenon_vent")
         );
 
         // Add info to Argon Vent block about its interaction
@@ -63,6 +72,13 @@ public class AveriumJEIPlugin implements IModPlugin {
                 new ItemStack(ModBlocks.ARGON_VENT.get()),
                 VanillaTypes.ITEM_STACK,
                 Component.translatable("jei.averiummod.info.argon_vent.interaction")
+        );
+
+        // Add info to Xenon Vent block about its interaction
+        registration.addIngredientInfo(
+                new ItemStack(ModBlocks.XENON_VENT.get()),
+                VanillaTypes.ITEM_STACK,
+                Component.translatable("jei.averiummod.info.xenon_vent.interaction")
         );
 
         // Gold-Reinforced Stick

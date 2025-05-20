@@ -15,12 +15,13 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.yuurraa.averiummod.AveriumMod;
 
 public class ModBiomeModifiers {
-    // ARGON_VENT (existing)
+    // ARGON_VENT
     public static final ResourceKey<BiomeModifier> ADD_ARGON_VENT = registerKey("add_argon_vent");
+    // XENON_VENT
+    public static final ResourceKey<BiomeModifier> ADD_XENON_VENT = registerKey("add_xenon_vent");
 
     // CRYTHON_ORE
     public static final ResourceKey<BiomeModifier> ADD_CRYTHON_ORE = registerKey("add_crython_ore");
-
     // INFERNIUM_ORE
     public static final ResourceKey<BiomeModifier> ADD_INFERNIUM_ORE = registerKey("add_infernium_ore");
 
@@ -34,13 +35,17 @@ public class ModBiomeModifiers {
                 biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.ARGON_VENT_PLACED)),
                 GenerationStep.Decoration.UNDERGROUND_ORES));
+        // XENON_VENT
+        context.register(ADD_XENON_VENT, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+                biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
+                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.XENON_VENT_PLACED)),
+                GenerationStep.Decoration.UNDERGROUND_ORES));
 
         // CRYTHON_ORE
         context.register(ADD_CRYTHON_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 biomes.getOrThrow(Tags.Biomes.IS_COLD_OVERWORLD), // Using Forge's IS_SNOWY tag
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.CRYTHON_ORE_PLACED)),
                 GenerationStep.Decoration.UNDERGROUND_ORES));
-
         // INFERNIUM_ORE
         context.register(ADD_INFERNIUM_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 biomes.getOrThrow(BiomeTags.IS_NETHER), // Target all Nether biomes

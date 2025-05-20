@@ -1,5 +1,6 @@
 {
   "block.averiummod.argon_vent": "Argon Vent",
+  "block.averiummod.xenon_vent": "Xenon Vent",
   "block.averiummod.crython_ore": "Crython Ore",
   "block.averiummod.deepslate_crython_ore": "Deepslate Crython Ore",
   "block.averiummod.infernium_ore": "Infernium Ore",
@@ -17,8 +18,10 @@
 
   "item.averiummod.gold_reinforced_stick": "Gold-Reinforced Stick",
   "item.averiummod.bottled_argon": "Bottled Argon",
+  "item.averiummod.bottled_xenon": "Bottled Xenon",
 
   "particle.averiummod.argon_smoke": "Argon",
+  "particle.averiummod.xenon_gas": "Xenon",
 
   "creativetab.averium_tab": "Averium",
 
@@ -27,9 +30,14 @@
   "jei.averiummod.info.obsidian_stake": "Nullifies the effects of raw and unstable Infernium in the inventory when equipped as a Charm.",
 
   "jei.averiummod.info.bottled_argon.line1": "Obtained by right-clicking an active Argon Vent with an empty Glass Bottle.",
-  "jei.averiummod.info.bottled_argon.line2": "Used in specialized crafting processes.",
+  "jei.averiummod.info.bottled_argon.line2": "Used in specialized material crafting processes.",
   "jei.averiummod.info.glass_bottle.argon_vent": "Can be used on an Argon Vent to collect Bottled Argon.",
   "jei.averiummod.info.argon_vent.interaction": "Right-click with a Glass Bottle to collect Bottled Argon when active. May cause nausea.",
+
+  "jei.averiummod.info.bottled_xenon.line1": "Obtained by right-clicking an active Xenon Vent with an empty Glass Bottle.",
+  "jei.averiummod.info.bottled_xenon.line2": "Used in specialized charm crafting processes.",
+  "jei.averiummod.info.glass_bottle.xenon_vent": "Can be used on an Xenon Vent to collect Bottled Xenon.",
+  "jei.averiummod.info.xenon_vent.interaction": "Right-click with a Glass Bottle to collect Bottled Xenon when active. May cause poison.",
 
   "jei.averiummod.info.gold_reinforced_stick": "A stick reinforced with gold. Used for Argon Treatment.",
 

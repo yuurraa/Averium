@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "averiummod:block/xenon_vent", "y": 0
+    },
+    "facing=east":  {
+      "model": "averiummod:block/xenon_vent", "y": 90
+    },
+    "facing=south": {
+      "model": "averiummod:block/xenon_vent", "y": 180
+    },
+    "facing=west":  {
+      "model": "averiummod:block/xenon_vent", "y": 270
+    }
+  }
+}

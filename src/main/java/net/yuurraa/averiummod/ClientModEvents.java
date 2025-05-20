@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.yuurraa.averiummod.particle.CryoParticle;
 import net.yuurraa.averiummod.particle.ModParticles;
 import net.yuurraa.averiummod.particle.ArgonSmokeParticle;
+import net.yuurraa.averiummod.particle.XenonGasParticle;
 
 @Mod.EventBusSubscriber(modid = AveriumMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEvents {
@@ -17,6 +18,9 @@ public class ClientModEvents {
         event.registerSpriteSet(
                 ModParticles.ARGON_SMOKE.get(),
                 ArgonSmokeParticle.Factory::new);
+        event.registerSpriteSet(
+                ModParticles.XENON_GAS.get(),
+                XenonGasParticle.Factory::new);
         event.registerSpriteSet(
                 ModParticles.CRYO_PARTICLE.get(),
                 CryoParticle.Factory::new);

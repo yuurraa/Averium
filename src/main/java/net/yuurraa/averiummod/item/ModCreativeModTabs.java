@@ -20,6 +20,7 @@ public class ModCreativeModTabs {
                     .title(Component.translatable("creativetab.averium_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModBlocks.ARGON_VENT.get());
+                        pOutput.accept(ModBlocks.XENON_VENT.get());
                         pOutput.accept(ModBlocks.CRYTHON_ORE.get());
                         pOutput.accept(ModBlocks.DEEPSLATE_CRYTHON_ORE.get());
                         pOutput.accept(ModBlocks.INFERNIUM_ORE.get());
@@ -37,6 +38,7 @@ public class ModCreativeModTabs {
 
                         pOutput.accept(ModItems.GOLD_REINFORCED_STICK.get());
                         pOutput.accept(ModItems.BOTTLED_ARGON.get());
+                        pOutput.accept(ModItems.BOTTLED_XENON.get());
                     })
                     .build());
 

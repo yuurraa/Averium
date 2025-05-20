@@ -19,11 +19,13 @@ public class ModPlacedFeatures {
     // ARGON_VENT
     public static final ResourceKey<PlacedFeature> ARGON_VENT_PLACED =
             registerKey("argon_vent_placed");
+    // XENON_VENT
+    public static final ResourceKey<PlacedFeature> XENON_VENT_PLACED =
+            registerKey("xenon_vent_placed");
 
     // CRYTHON_ORE
     public static final ResourceKey<PlacedFeature> CRYTHON_ORE_PLACED =
             registerKey("crython_ore_placed");
-
     // INFERNIUM_ORE
     public static final ResourceKey<PlacedFeature> INFERNIUM_ORE_PLACED =
             registerKey("infernium_ore_placed");
@@ -31,12 +33,14 @@ public class ModPlacedFeatures {
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         Holder.Reference<ConfiguredFeature<?, ?>> argonVentConfigured = context.lookup(Registries.CONFIGURED_FEATURE)
                 .getOrThrow(ModConfiguredFeatures.ARGON_VENT);
+        Holder.Reference<ConfiguredFeature<?, ?>> xenonVentConfigured = context.lookup(Registries.CONFIGURED_FEATURE)
+                .getOrThrow(ModConfiguredFeatures.XENON_VENT);
         Holder.Reference<ConfiguredFeature<?, ?>> crythonOreConfigured = context.lookup(Registries.CONFIGURED_FEATURE)
                 .getOrThrow(ModConfiguredFeatures.CRYTHON_ORE);
         Holder.Reference<ConfiguredFeature<?, ?>> inferniumOreConfigured = context.lookup(Registries.CONFIGURED_FEATURE)
                 .getOrThrow(ModConfiguredFeatures.INFERNIUM_ORE);
 
-        // ARGON_VENT PLACEMENT (existing, using your values)
+        // ARGON_VENT PLACEMENT
         var argonVentModifiers = List.of(
                 CountPlacement.of(7),
                 InSquarePlacement.spread(),
@@ -49,10 +53,25 @@ public class ModPlacedFeatures {
         );
         register(context, ARGON_VENT_PLACED, argonVentConfigured, argonVentModifiers);
 
+        // XENON_VENT PLACEMENT
+        // Sparser (lower count) and slightly deeper than Argon Vents
+        var xenonVentModifiers = List.of(
+                CountPlacement.of(6), // Sparser than Argon's 7
+                InSquarePlacement.spread(),
+                HeightRangePlacement.uniform(
+                        VerticalAnchor.absolute(-64), // Deepest
+                        VerticalAnchor.absolute(0)  // Max height, lower than Argon's 0
+                ),
+                // Same EnvironmentScan as Argon Vent if it should also face open air
+                EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.ONLY_IN_AIR_PREDICATE, 1),
+                BiomeFilter.biome()
+        );
+        register(context, XENON_VENT_PLACED, xenonVentConfigured, xenonVentModifiers);
+
 
         // CRYTHON_ORE PLACEMENT
         var crythonOreModifiers = List.of(
-                CountPlacement.of(13), // Set higher due to overlaps in biomes
+                CountPlacement.of(6), // Set higher due to overlaps in biomes
                 InSquarePlacement.spread(),
                 // Diamond Y-level distribution: triangle shape, peak at bottom of world.
                 HeightRangePlacement.triangle(
@@ -66,7 +85,7 @@ public class ModPlacedFeatures {
 
         // INFERNIUM_ORE PLACEMENT
         var inferniumOreModifiers = List.of(
-                CountPlacement.of(3),
+                CountPlacement.of(4),
                 InSquarePlacement.spread(),
                 HeightRangePlacement.uniform(
                         VerticalAnchor.absolute(8),

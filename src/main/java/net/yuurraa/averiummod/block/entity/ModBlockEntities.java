@@ -21,6 +21,14 @@ public class ModBlockEntities {
                             )
                             .build(null)
             );
+    public static final RegistryObject<BlockEntityType<XenonVentBlockEntity>> XENON_VENT =
+            BLOCK_ENTITIES.register("xenon_vent",
+                    () -> BlockEntityType.Builder.of(
+                                    XenonVentBlockEntity::new,
+                                    ModBlocks.XENON_VENT.get()
+                            )
+                            .build(null)
+            );
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

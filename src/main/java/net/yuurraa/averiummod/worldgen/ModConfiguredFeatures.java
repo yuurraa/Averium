@@ -20,23 +20,29 @@ public class ModConfiguredFeatures {
     // ARGON_VENT
     public static final ResourceKey<ConfiguredFeature<?, ?>> ARGON_VENT =
             registerKey("argon_vent_ore");
+    // XENON_VENT
+    public static final ResourceKey<ConfiguredFeature<?, ?>> XENON_VENT =
+            registerKey("xenon_vent_ore");
 
     // CRYTHON_ORE
     public static final ResourceKey<ConfiguredFeature<?, ?>> CRYTHON_ORE =
             registerKey("crython_ore");
-
     // INFERNIUM_ORE
     public static final ResourceKey<ConfiguredFeature<?, ?>> INFERNIUM_ORE =
             registerKey("infernium_ore");
 
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
-        // ARGON_VENT (existing)
+        // ARGON_VENT
         RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
         OreConfiguration argonVentConfig = new OreConfiguration(
                 List.of(OreConfiguration.target(deepslateReplaceables, ModBlocks.ARGON_VENT.get().defaultBlockState())),
-                4 // Argon Vent vein size
-        );
+                4);
         register(context, ARGON_VENT, Feature.ORE, argonVentConfig);
+        // XENON_VENT
+        OreConfiguration xenonVentConfig = new OreConfiguration(
+                List.of(OreConfiguration.target(deepslateReplaceables, ModBlocks.XENON_VENT.get().defaultBlockState())),
+                2);
+        register(context, XENON_VENT, Feature.ORE, xenonVentConfig);
 
 
         // CRYTHON_ORE
@@ -45,7 +51,7 @@ public class ModConfiguredFeatures {
                 OreConfiguration.target(stoneReplaceables, ModBlocks.CRYTHON_ORE.get().defaultBlockState()),
                 OreConfiguration.target(deepslateReplaceables, ModBlocks.DEEPSLATE_CRYTHON_ORE.get().defaultBlockState())
         );
-        OreConfiguration crythonOreConfig = new OreConfiguration(crythonOres, 3); // Vein size of 3
+        OreConfiguration crythonOreConfig = new OreConfiguration(crythonOres, 4); // Vein size of 3
         register(context, CRYTHON_ORE, Feature.ORE, crythonOreConfig);
 
 

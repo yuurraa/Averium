@@ -42,6 +42,10 @@ public class ModItems {
             () -> new Item(new Item.Properties()
                     .stacksTo(16)
                     .craftRemainder(Items.GLASS_BOTTLE)));
+    public static final RegistryObject<Item> BOTTLED_XENON = ITEMS.register("bottled_xenon",
+            () -> new Item(new Item.Properties()
+                    .stacksTo(16)
+                    .craftRemainder(Items.GLASS_BOTTLE)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

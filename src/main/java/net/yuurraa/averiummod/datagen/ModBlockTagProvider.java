@@ -24,6 +24,9 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         // Argon Vent
         this.tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(ModBlocks.ARGON_VENT.get());
+        // Xenon Vent
+        this.tag(BlockTags.NEEDS_STONE_TOOL)
+                .add(ModBlocks.XENON_VENT.get());
 
         // Crython Ores
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
