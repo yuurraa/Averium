@@ -43,6 +43,15 @@ public class ModBlocks {
                     .sound(SoundType.DEEPSLATE)
             ));
 
+    public static final RegistryObject<Block> INFERNIUM_ORE = registerBlock("infernium_ore",
+            () -> new InferniumOreBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.NETHER) // Or MapColor.COLOR_RED, MapColor.COLOR_ORANGE
+                    .instrument(net.minecraft.world.level.block.state.properties.NoteBlockInstrument.BASEDRUM) // Same as Netherrack
+                    .requiresCorrectToolForDrops()
+                    .strength(20.0F, 1200.0F) // Tough like Ancient Debris, very blast resistant
+                    .sound(SoundType.NETHER_ORE) // Sounds like Nether Gold Ore
+            ));
+
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

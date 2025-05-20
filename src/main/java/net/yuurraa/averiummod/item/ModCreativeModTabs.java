@@ -22,12 +22,17 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModBlocks.ARGON_VENT.get());
                         pOutput.accept(ModBlocks.CRYTHON_ORE.get());
                         pOutput.accept(ModBlocks.DEEPSLATE_CRYTHON_ORE.get());
+                        pOutput.accept(ModBlocks.INFERNIUM_ORE.get());
 
                         pOutput.accept(ModItems.INERT_CHARM.get());
 
                         pOutput.accept(ModItems.RAW_CRYTHON.get());
                         pOutput.accept(ModItems.UNSTABLE_CRYTHON.get());
                         pOutput.accept(ModItems.STABLE_CRYTHON.get());
+
+                        pOutput.accept(ModItems.RAW_INFERNIUM.get());
+                        pOutput.accept(ModItems.UNSTABLE_INFERNIUM.get());
+                        pOutput.accept(ModItems.STABLE_INFERNIUM.get());
 
                         pOutput.accept(ModItems.GOLD_REINFORCED_STICK.get());
                         pOutput.accept(ModItems.BOTTLED_ARGON.get());

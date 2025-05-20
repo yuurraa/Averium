@@ -25,6 +25,14 @@ public class ModItems {
     public static final RegistryObject<Item> STABLE_CRYTHON = ITEMS.register("stable_crython",
             () -> new Item(new Item.Properties()));
 
+    // Infernium
+    public static final RegistryObject<Item> RAW_INFERNIUM = ITEMS.register("raw_infernium",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> UNSTABLE_INFERNIUM = ITEMS.register("unstable_infernium",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STABLE_INFERNIUM = ITEMS.register("stable_infernium",
+            () -> new Item(new Item.Properties()));
+
     // Processable
     public static final RegistryObject<Item> GOLD_REINFORCED_STICK = ITEMS.register("gold_reinforced_stick",
             () -> new Item(new Item.Properties()));

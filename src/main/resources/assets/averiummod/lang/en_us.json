@@ -9,6 +9,10 @@
   "item.averiummod.unstable_crython": "Unstable Crython",
   "item.averiummod.stable_crython": "Stable Crython",
 
+  "item.averiummod.raw_infernium": "Raw Infernium",
+  "item.averiummod.unstable_infernium": "Unstable Infernium",
+  "item.averiummod.stable_infernium": "Stable Infernium",
+
   "item.averiummod.gold_reinforced_stick": "Gold-Reinforced Stick",
   "item.averiummod.bottled_argon": "Bottled Argon",
 
@@ -31,8 +35,15 @@
   "jei.averiummod.info.raw_crython.line3": "Found in cold biomes at deep Y-levels.",
   "jei.averiummod.info.crython_slow": "Inflicts slowness on the player when in inventory without an Inert Charm. Stabilise to remove this effect.",
   "jei.averiummod.info.stable_crython": "Stabilised Crython, no longer inflicts slowness on the player when in inventory.",
-
   "jei.averiummod.info.crython_ore.drops": "Drops Raw Crython when mined with a Diamond-tier Pickaxe or stronger. Found in cold biomes.",
   "jei.averiummod.info.deepslate_crython_ore.drops": "Drops Raw Crython when mined with a Diamond-tier Pickaxe or stronger. Found in cold biomes.",
-  "jei.averiummod.info.crython_ore.info": "Slows the player in a radius, and applies Mining Fatigue when mined."
+  "jei.averiummod.info.crython_ore.info": "Slows the player in a radius, and applies Mining Fatigue when mined.",
+
+  "jei.averiummod.info.raw_infernium.line1": "Obtained by mining Infernium Ore.",
+  "jei.averiummod.info.raw_infernium.line2": "Requires a Diamond-tier Pickaxe or stronger.",
+  "jei.averiummod.info.raw_infernium.line3": "Found in the Nether.",
+  "jei.averiummod.info.infernium_burn": "Periodically sets the player ablaze when in inventory without an Inert Charm. Stabilise to remove this effect.",
+  "jei.averiummod.info.stable_infernium": "Stabilised Infernium, no longer sets the player ablaze when in inventory.",
+  "jei.averiummod.info.infernium_ore.drops": "Drops Raw Infernium when mined with a Diamond-tier Pickaxe or stronger. Found in the Nether.",
+  "jei.averiummod.info.infernium_ore.info": "Periodically sets the player ablaze within a radius of it."
 }

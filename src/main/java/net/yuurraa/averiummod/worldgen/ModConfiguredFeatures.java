@@ -25,6 +25,10 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> CRYTHON_ORE =
             registerKey("crython_ore");
 
+    // INFERNIUM_ORE
+    public static final ResourceKey<ConfiguredFeature<?, ?>> INFERNIUM_ORE =
+            registerKey("infernium_ore");
+
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
         // ARGON_VENT (existing)
         RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
@@ -37,17 +41,21 @@ public class ModConfiguredFeatures {
 
         // CRYTHON_ORE
         RuleTest stoneReplaceables = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
-        // RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES); // already defined
-
         List<OreConfiguration.TargetBlockState> crythonOres = List.of(
                 OreConfiguration.target(stoneReplaceables, ModBlocks.CRYTHON_ORE.get().defaultBlockState()),
                 OreConfiguration.target(deepslateReplaceables, ModBlocks.DEEPSLATE_CRYTHON_ORE.get().defaultBlockState())
         );
-
-        // Vein size for Crython Ore - should be small as it's rare.
-        // Diamonds are often 4-8. Let's try 3.
         OreConfiguration crythonOreConfig = new OreConfiguration(crythonOres, 3); // Vein size of 3
         register(context, CRYTHON_ORE, Feature.ORE, crythonOreConfig);
+
+
+        // INFERNIUM_ORE
+        RuleTest netherReplaceables = new TagMatchTest(BlockTags.BASE_STONE_NETHER);
+        List<OreConfiguration.TargetBlockState> inferniumOres = List.of(
+                OreConfiguration.target(netherReplaceables, ModBlocks.INFERNIUM_ORE.get().defaultBlockState())
+        );
+        OreConfiguration inferniumOreConfig = new OreConfiguration(inferniumOres, 3, 0.0f);
+        register(context, INFERNIUM_ORE, Feature.ORE, inferniumOreConfig);
     }
 
     private static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {

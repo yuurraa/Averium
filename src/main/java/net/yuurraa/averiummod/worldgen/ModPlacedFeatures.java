@@ -16,19 +16,25 @@ import net.yuurraa.averiummod.AveriumMod;
 import java.util.List;
 
 public class ModPlacedFeatures {
-    // ARGON_VENT (existing)
-    public static final ResourceKey<PlacedFeature> ARGON_VENT_PLACED = // Renamed for clarity
+    // ARGON_VENT
+    public static final ResourceKey<PlacedFeature> ARGON_VENT_PLACED =
             registerKey("argon_vent_placed");
 
     // CRYTHON_ORE
     public static final ResourceKey<PlacedFeature> CRYTHON_ORE_PLACED =
             registerKey("crython_ore_placed");
 
+    // INFERNIUM_ORE
+    public static final ResourceKey<PlacedFeature> INFERNIUM_ORE_PLACED =
+            registerKey("infernium_ore_placed");
+
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         Holder.Reference<ConfiguredFeature<?, ?>> argonVentConfigured = context.lookup(Registries.CONFIGURED_FEATURE)
-                .getOrThrow(ModConfiguredFeatures.ARGON_VENT); // Use updated key
+                .getOrThrow(ModConfiguredFeatures.ARGON_VENT);
         Holder.Reference<ConfiguredFeature<?, ?>> crythonOreConfigured = context.lookup(Registries.CONFIGURED_FEATURE)
                 .getOrThrow(ModConfiguredFeatures.CRYTHON_ORE);
+        Holder.Reference<ConfiguredFeature<?, ?>> inferniumOreConfigured = context.lookup(Registries.CONFIGURED_FEATURE)
+                .getOrThrow(ModConfiguredFeatures.INFERNIUM_ORE);
 
         // ARGON_VENT PLACEMENT (existing, using your values)
         var argonVentModifiers = List.of(
@@ -46,7 +52,7 @@ public class ModPlacedFeatures {
 
         // CRYTHON_ORE PLACEMENT
         var crythonOreModifiers = List.of(
-                CountPlacement.of(20), // Set higher due to overlaps in biomes
+                CountPlacement.of(13), // Set higher due to overlaps in biomes
                 InSquarePlacement.spread(),
                 // Diamond Y-level distribution: triangle shape, peak at bottom of world.
                 HeightRangePlacement.triangle(
@@ -56,6 +62,19 @@ public class ModPlacedFeatures {
                 BiomeFilter.biome() // Essential for biome-specific placement via BiomeModifiers
         );
         register(context, CRYTHON_ORE_PLACED, crythonOreConfigured, crythonOreModifiers);
+
+
+        // INFERNIUM_ORE PLACEMENT
+        var inferniumOreModifiers = List.of(
+                CountPlacement.of(3),
+                InSquarePlacement.spread(),
+                HeightRangePlacement.uniform(
+                        VerticalAnchor.absolute(8),
+                        VerticalAnchor.absolute(119)
+                ),
+                BiomeFilter.biome()
+        );
+        register(context, INFERNIUM_ORE_PLACED, inferniumOreConfigured, inferniumOreModifiers);
     }
 
     private static ResourceKey<PlacedFeature> registerKey(String name) {

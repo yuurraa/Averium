@@ -21,23 +21,32 @@ public class ModBiomeModifiers {
     // CRYTHON_ORE
     public static final ResourceKey<BiomeModifier> ADD_CRYTHON_ORE = registerKey("add_crython_ore");
 
+    // INFERNIUM_ORE
+    public static final ResourceKey<BiomeModifier> ADD_INFERNIUM_ORE = registerKey("add_infernium_ore");
+
 
     public static void bootstrap(BootstapContext<BiomeModifier> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
         var biomes = context.lookup(Registries.BIOME);
 
-        // ARGON_VENT (existing)
+        // ARGON_VENT
         context.register(ADD_ARGON_VENT, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
-                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.ARGON_VENT_PLACED)), // Use updated key
+                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.ARGON_VENT_PLACED)),
                 GenerationStep.Decoration.UNDERGROUND_ORES));
 
         // CRYTHON_ORE
         context.register(ADD_CRYTHON_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 biomes.getOrThrow(Tags.Biomes.IS_COLD_OVERWORLD), // Using Forge's IS_SNOWY tag
-                // Alternatively, for a broader cold definition: biomes.getOrThrow(Tags.Biomes.IS_COLD_OVERWORLD),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.CRYTHON_ORE_PLACED)),
                 GenerationStep.Decoration.UNDERGROUND_ORES));
+
+        // INFERNIUM_ORE
+        context.register(ADD_INFERNIUM_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+                biomes.getOrThrow(BiomeTags.IS_NETHER), // Target all Nether biomes
+                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.INFERNIUM_ORE_PLACED)),
+                GenerationStep.Decoration.UNDERGROUND_DECORATION // Nether ores often use this step
+        ));
     }
 
     private static ResourceKey<BiomeModifier> registerKey(String name) {

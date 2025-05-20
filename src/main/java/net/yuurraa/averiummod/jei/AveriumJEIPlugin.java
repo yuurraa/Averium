@@ -44,14 +44,14 @@ public class AveriumJEIPlugin implements IModPlugin {
                 Component.translatable("jei.averiummod.info.bottled_argon.line2")
         );
 
-        // Optional: Add info to Glass Bottle about its use with Argon Vents
+        // Add info to Glass Bottle about its use with Argon Vents
         registration.addIngredientInfo(
                 new ItemStack(Items.GLASS_BOTTLE),
                 VanillaTypes.ITEM_STACK,
                 Component.translatable("jei.averiummod.info.glass_bottle.argon_vent")
         );
 
-        // Optional: Add info to Argon Vent block about its interaction
+        // Add info to Argon Vent block about its interaction
         registration.addIngredientInfo(
                 new ItemStack(ModBlocks.ARGON_VENT.get()),
                 VanillaTypes.ITEM_STACK,
@@ -99,6 +99,37 @@ public class AveriumJEIPlugin implements IModPlugin {
                 VanillaTypes.ITEM_STACK,
                 Component.translatable("jei.averiummod.info.deepslate_crython_ore.drops"),
                 Component.translatable("jei.averiummod.info.crython_ore.info")
+        );
+
+
+        // --- How to obtain Raw Infernium ---
+        registration.addIngredientInfo(
+                new ItemStack(ModItems.RAW_INFERNIUM.get()),
+                VanillaTypes.ITEM_STACK,
+                Component.translatable("jei.averiummod.info.raw_infernium.line1"),
+                Component.translatable("jei.averiummod.info.raw_infernium.line2"),
+                Component.translatable("jei.averiummod.info.raw_infernium.line3"),
+                Component.translatable("jei.averiummod.info.infernium_burn")
+        );
+
+        // Unstable and Stable Infernium
+        registration.addIngredientInfo(
+                new ItemStack(ModItems.UNSTABLE_INFERNIUM.get()),
+                VanillaTypes.ITEM_STACK,
+                Component.translatable("jei.averiummod.info.infernium_burn")
+        );
+        registration.addIngredientInfo(
+                new ItemStack(ModItems.STABLE_INFERNIUM.get()),
+                VanillaTypes.ITEM_STACK,
+                Component.translatable("jei.averiummod.info.stable_infernium")
+        );
+
+        // Add info to the Infernium Ore block
+        registration.addIngredientInfo(
+                new ItemStack(ModBlocks.INFERNIUM_ORE.get()),
+                VanillaTypes.ITEM_STACK,
+                Component.translatable("jei.averiummod.info.infernium_ore.drops"),
+                Component.translatable("jei.averiummod.info.infernium_ore.info")
         );
     }
 }

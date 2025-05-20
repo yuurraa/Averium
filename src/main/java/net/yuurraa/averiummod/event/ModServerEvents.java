@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -24,105 +25,136 @@ import java.util.stream.Collectors;
 @Mod.EventBusSubscriber(modid = AveriumMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModServerEvents {
 
-    // Proximity Slowness constants
-    private static final int PROXIMITY_SLOWNESS_CHECK_RADIUS = 4;
-    private static final int PROXIMITY_SLOWNESS_EFFECT_DURATION = 60;
-    private static final int PROXIMITY_SLOWNESS_AMPLIFIER = 0;
+    // --- Crython Proximity Slowness Constants ---
+    private static final int CRYTHON_PROXIMITY_SLOWNESS_RADIUS = 4;
+    private static final int CRYTHON_PROXIMITY_SLOWNESS_DURATION = 60;
+    private static final int CRYTHON_PROXIMITY_SLOWNESS_AMPLIFIER = 0;
 
-    // Items that cause slowness if in inventory
-    private static final Set<RegistryObject<Item>> INVENTORY_SLOWNESS_ITEM_ROBJS = Set.of(
+    // --- Crython Inventory Slowness (unless charm) ---
+    private static final Set<RegistryObject<Item>> CRYTHON_INVENTORY_SLOWNESS_ROBJS = Set.of(
             ModItems.RAW_CRYTHON,
             ModItems.UNSTABLE_CRYTHON
     );
-    private static Set<Item> resolvedInventorySlownessItems = null;
-
-    private static Set<Item> getResolvedInventorySlownessItems() {
-        if (resolvedInventorySlownessItems == null) {
-            resolvedInventorySlownessItems = INVENTORY_SLOWNESS_ITEM_ROBJS.stream()
+    private static Set<Item> resolvedCrythonInventorySlownessItems = null;
+    private static Set<Item> getResolvedCrythonInventorySlownessItems() {
+        if (resolvedCrythonInventorySlownessItems == null) {
+            resolvedCrythonInventorySlownessItems = CRYTHON_INVENTORY_SLOWNESS_ROBJS.stream()
                     .map(RegistryObject::get)
                     .collect(Collectors.toSet());
         }
-        return resolvedInventorySlownessItems;
+        return resolvedCrythonInventorySlownessItems;
     }
+    private static final int CRYTHON_INVENTORY_SLOWNESS_DURATION = 10;
+    private static final int CRYTHON_INVENTORY_SLOWNESS_AMPLIFIER = 0;
 
-    private static final int INVENTORY_SLOWNESS_EFFECT_DURATION = 10;
-    private static final int INVENTORY_SLOWNESS_AMPLIFIER = 0;
+    // --- Infernium Proximity Ablaze Constants ---
+    private static final int INFERNIUM_PROXIMITY_ABLAZE_RADIUS = 3; // Slightly smaller radius for fire
+    private static final int INFERNIUM_PROXIMITY_ABLAZE_SECONDS = 3; // Set on fire for 3 seconds
+    private static final int INFERNIUM_PROXIMITY_CHECK_INTERVAL = 40; // Check every 2 seconds
+
+    // --- Infernium Inventory Ablaze (unless charm) ---
+    private static final Set<RegistryObject<Item>> INFERNIUM_INVENTORY_ABLAZE_ROBJS = Set.of(
+            ModItems.RAW_INFERNIUM,
+            ModItems.UNSTABLE_INFERNIUM
+    );
+    private static Set<Item> resolvedInferniumInventoryAblazeItems = null;
+    private static Set<Item> getResolvedInferniumInventoryAblazeItems() {
+        if (resolvedInferniumInventoryAblazeItems == null) {
+            resolvedInferniumInventoryAblazeItems = INFERNIUM_INVENTORY_ABLAZE_ROBJS.stream()
+                    .map(RegistryObject::get)
+                    .collect(Collectors.toSet());
+        }
+        return resolvedInferniumInventoryAblazeItems;
+    }
+    private static final int INFERNIUM_INVENTORY_ABLAZE_SECONDS = 2; // Set on fire for 2 seconds
+    private static final int INFERNIUM_INVENTORY_CHECK_INTERVAL = 30; // Chance to set ablaze every 1.5 seconds
+
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END && event.player instanceof ServerPlayer player) {
             Level level = player.level();
-            boolean appliedProximitySlownessThisTick = false; // Keep this if you still want proximity logic
 
-            // --- Proximity Slowness for Crython Ore Blocks (runs every 20 ticks) ---
+            // --- Crython Ore Proximity Slowness (runs every 20 ticks) ---
             if (player.tickCount % 20 == 0) {
-                // ... (your existing proximity slowness logic remains here) ...
+                // ... (existing Crython proximity slowness logic) ...
                 BlockPos playerPos = player.blockPosition();
                 boolean nearCrythonOre = false;
-                for (int x = -PROXIMITY_SLOWNESS_CHECK_RADIUS; x <= PROXIMITY_SLOWNESS_CHECK_RADIUS; x++) {
-                    for (int y = -PROXIMITY_SLOWNESS_CHECK_RADIUS; y <= PROXIMITY_SLOWNESS_CHECK_RADIUS; y++) {
-                        for (int z = -PROXIMITY_SLOWNESS_CHECK_RADIUS; z <= PROXIMITY_SLOWNESS_CHECK_RADIUS; z++) {
+                for (int x = -CRYTHON_PROXIMITY_SLOWNESS_RADIUS; x <= CRYTHON_PROXIMITY_SLOWNESS_RADIUS; x++) {
+                    for (int y = -CRYTHON_PROXIMITY_SLOWNESS_RADIUS; y <= CRYTHON_PROXIMITY_SLOWNESS_RADIUS; y++) {
+                        for (int z = -CRYTHON_PROXIMITY_SLOWNESS_RADIUS; z <= CRYTHON_PROXIMITY_SLOWNESS_RADIUS; z++) {
                             BlockState blockState = level.getBlockState(playerPos.offset(x, y, z));
-                            if (blockState.is(ModBlocks.CRYTHON_ORE.get()) ||
-                                    blockState.is(ModBlocks.DEEPSLATE_CRYTHON_ORE.get())) {
+                            if (blockState.is(ModBlocks.CRYTHON_ORE.get()) || blockState.is(ModBlocks.DEEPSLATE_CRYTHON_ORE.get())) {
                                 nearCrythonOre = true; break;
                             }
                         } if (nearCrythonOre) break;
                     } if (nearCrythonOre) break;
                 }
-
                 if (nearCrythonOre) {
                     MobEffectInstance existingSlowness = player.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
-                    if (existingSlowness == null ||
-                            (existingSlowness.getDuration() < PROXIMITY_SLOWNESS_EFFECT_DURATION - 5 &&
-                                    existingSlowness.getAmplifier() <= PROXIMITY_SLOWNESS_AMPLIFIER)) {
-                        player.addEffect(new MobEffectInstance(
-                                MobEffects.MOVEMENT_SLOWDOWN,
-                                PROXIMITY_SLOWNESS_EFFECT_DURATION,
-                                PROXIMITY_SLOWNESS_AMPLIFIER,
-                                false, true, true
-                        ));
-                        // appliedProximitySlownessThisTick = true; // Not strictly needed with how effects merge
+                    if (existingSlowness == null || (existingSlowness.getDuration() < CRYTHON_PROXIMITY_SLOWNESS_DURATION - 5 && existingSlowness.getAmplifier() <= CRYTHON_PROXIMITY_SLOWNESS_AMPLIFIER)) {
+                        player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, CRYTHON_PROXIMITY_SLOWNESS_DURATION, CRYTHON_PROXIMITY_SLOWNESS_AMPLIFIER, false, true, true));
                     }
                 }
             }
 
-            // --- Slowness for Carrying Raw/Unstable Crython (unless Inert Charm is equipped) ---
-            boolean hasInertCharmEquipped = CuriosApi.getCuriosHelper()
-                    .findFirstCurio(player, ModItems.INERT_CHARM.get())
-                    .isPresent();
-
+            // --- Crython Inventory Slowness (runs every tick) ---
+            boolean hasInertCharmEquipped = CuriosApi.getCuriosHelper().findFirstCurio(player, ModItems.INERT_CHARM.get()).isPresent();
             boolean carryingSlowingCrython = false;
-            if (!hasInertCharmEquipped) { // Only check for slowing Crython if charm is NOT equipped
-                Set<Item> itemsThatSlow = getResolvedInventorySlownessItems();
-                // Check main inventory + offhand. Armor slots usually don't hold raw materials.
-                for (int i = 0; i < player.getInventory().items.size(); ++i) { // Main inventory slots (0-35)
-                    ItemStack stack = player.getInventory().items.get(i);
-                    if (itemsThatSlow.contains(stack.getItem())) {
+            if (!hasInertCharmEquipped) {
+                Set<Item> itemsThatSlowCrython = getResolvedCrythonInventorySlownessItems();
+                Inventory inventory = player.getInventory();
+                for (int i = 0; i < inventory.getContainerSize(); ++i) {
+                    ItemStack stack = inventory.getItem(i);
+                    if (itemsThatSlowCrython.contains(stack.getItem())) {
                         carryingSlowingCrython = true;
                         break;
                     }
                 }
-                if (!carryingSlowingCrython) {
-                    ItemStack offHandStack = player.getInventory().offhand.get(0);
-                    if (itemsThatSlow.contains(offHandStack.getItem())) {
-                        carryingSlowingCrython = true;
-                    }
-                }
-                // Note: player.getInventory().getContainerSize() includes armor and offhand.
-                // A more thorough check could use that loop as in the previous "satchel" version,
-                // but typically raw materials aren't in armor slots.
+            }
+            if (carryingSlowingCrython) {
+                player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, CRYTHON_INVENTORY_SLOWNESS_DURATION, CRYTHON_INVENTORY_SLOWNESS_AMPLIFIER, true, false, true));
             }
 
-            if (carryingSlowingCrython) { // This implies !hasInertCharmEquipped
-                player.addEffect(new MobEffectInstance(
-                        MobEffects.MOVEMENT_SLOWDOWN,
-                        INVENTORY_SLOWNESS_EFFECT_DURATION,
-                        INVENTORY_SLOWNESS_AMPLIFIER,
-                        true,  // ambient
-                        false, // no particles
-                        true   // show icon
-                ));
+
+            // --- NEW: Infernium Ore Proximity Ablaze (runs periodically) ---
+            if (player.tickCount % INFERNIUM_PROXIMITY_CHECK_INTERVAL == 0) {
+                if (!player.isCreative() && !player.isSpectator() && !player.fireImmune()) { // Don't affect creative/spectator/fire immune
+                    BlockPos playerPos = player.blockPosition();
+                    boolean nearInferniumOre = false;
+                    for (int x = -INFERNIUM_PROXIMITY_ABLAZE_RADIUS; x <= INFERNIUM_PROXIMITY_ABLAZE_RADIUS; x++) {
+                        for (int y = -INFERNIUM_PROXIMITY_ABLAZE_RADIUS; y <= INFERNIUM_PROXIMITY_ABLAZE_RADIUS; y++) {
+                            for (int z = -INFERNIUM_PROXIMITY_ABLAZE_RADIUS; z <= INFERNIUM_PROXIMITY_ABLAZE_RADIUS; z++) {
+                                if (level.getBlockState(playerPos.offset(x, y, z)).is(ModBlocks.INFERNIUM_ORE.get())) {
+                                    nearInferniumOre = true; break;
+                                }
+                            } if (nearInferniumOre) break;
+                        } if (nearInferniumOre) break;
+                    }
+
+                    if (nearInferniumOre) {
+                        player.setSecondsOnFire(INFERNIUM_PROXIMITY_ABLAZE_SECONDS);
+                    }
+                }
+            }
+
+            // --- NEW: Infernium Inventory Ablaze (runs periodically, if no charm) ---
+            if (player.tickCount % INFERNIUM_INVENTORY_CHECK_INTERVAL == 0) {
+                if (!player.isCreative() && !player.isSpectator() && !player.fireImmune() && !hasInertCharmEquipped) { // Check charm here too
+                    Set<Item> itemsThatSetAblaze = getResolvedInferniumInventoryAblazeItems();
+                    Inventory inventory = player.getInventory();
+                    boolean carryingAblazeItem = false;
+                    for (int i = 0; i < inventory.getContainerSize(); ++i) {
+                        ItemStack stack = inventory.getItem(i);
+                        if (itemsThatSetAblaze.contains(stack.getItem())) {
+                            carryingAblazeItem = true;
+                            break;
+                        }
+                    }
+                    if (carryingAblazeItem) {
+                        player.setSecondsOnFire(INFERNIUM_INVENTORY_ABLAZE_SECONDS);
+                    }
+                }
             }
         }
     }
