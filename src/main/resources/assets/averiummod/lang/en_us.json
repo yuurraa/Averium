@@ -2,8 +2,10 @@
   "block.averiummod.argon_vent": "Argon Vent",
   "block.averiummod.crython_ore": "Crython Ore",
   "block.averiummod.deepslate_crython_ore": "Deepslate Crython Ore",
+  "block.averiummod.infernium_ore": "Infernium Ore",
 
-  "item.averiummod.inert_charm": "Inert Charm",
+  "item.averiummod.frost_ebber": "Frost Ebber",
+  "item.averiummod.obsidian_stake": "Obsidian Stake",
 
   "item.averiummod.raw_crython": "Raw Crython",
   "item.averiummod.unstable_crython": "Unstable Crython",
@@ -21,7 +23,8 @@
   "creativetab.averium_tab": "Averium",
 
 
-  "jei.averiummod.info.inert_charm": "Nullifies the effects of raw and unstable Averium metals in the inventory when equipped as a Charm.",
+  "jei.averiummod.info.frost_ebber": "Nullifies the effects of raw and unstable Crython in the inventory when equipped as a Charm.",
+  "jei.averiummod.info.obsidian_stake": "Nullifies the effects of raw and unstable Infernium in the inventory when equipped as a Charm.",
 
   "jei.averiummod.info.bottled_argon.line1": "Obtained by right-clicking an active Argon Vent with an empty Glass Bottle.",
   "jei.averiummod.info.bottled_argon.line2": "Used in specialized crafting processes.",
@@ -33,7 +36,7 @@
   "jei.averiummod.info.raw_crython.line1": "Obtained by mining Crython Ore or Deepslate Crython Ore.",
   "jei.averiummod.info.raw_crython.line2": "Requires a Diamond-tier Pickaxe or stronger.",
   "jei.averiummod.info.raw_crython.line3": "Found in cold biomes at deep Y-levels.",
-  "jei.averiummod.info.crython_slow": "Inflicts slowness on the player when in inventory without an Inert Charm. Stabilise to remove this effect.",
+  "jei.averiummod.info.crython_slow": "Inflicts slowness on the player when in inventory without a Frost Ebber. Stabilise to remove this effect.",
   "jei.averiummod.info.stable_crython": "Stabilised Crython, no longer inflicts slowness on the player when in inventory.",
   "jei.averiummod.info.crython_ore.drops": "Drops Raw Crython when mined with a Diamond-tier Pickaxe or stronger. Found in cold biomes.",
   "jei.averiummod.info.deepslate_crython_ore.drops": "Drops Raw Crython when mined with a Diamond-tier Pickaxe or stronger. Found in cold biomes.",
@@ -42,7 +45,7 @@
   "jei.averiummod.info.raw_infernium.line1": "Obtained by mining Infernium Ore.",
   "jei.averiummod.info.raw_infernium.line2": "Requires a Diamond-tier Pickaxe or stronger.",
   "jei.averiummod.info.raw_infernium.line3": "Found in the Nether.",
-  "jei.averiummod.info.infernium_burn": "Periodically sets the player ablaze when in inventory without an Inert Charm. Stabilise to remove this effect.",
+  "jei.averiummod.info.infernium_burn": "Periodically sets the player ablaze when in inventory without an Obsidian Stake. Stabilise to remove this effect.",
   "jei.averiummod.info.stable_infernium": "Stabilised Infernium, no longer sets the player ablaze when in inventory.",
   "jei.averiummod.info.infernium_ore.drops": "Drops Raw Infernium when mined with a Diamond-tier Pickaxe or stronger. Found in the Nether.",
   "jei.averiummod.info.infernium_ore.info": "Periodically sets the player ablaze within a radius of it."

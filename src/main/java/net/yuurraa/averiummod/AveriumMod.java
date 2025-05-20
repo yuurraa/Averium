@@ -2,17 +2,9 @@
 package net.yuurraa.averiummod;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -25,17 +17,12 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.yuurraa.averiummod.block.ModBlocks;
 import net.yuurraa.averiummod.block.entity.ModBlockEntities;
-import net.yuurraa.averiummod.item.InertCharmItem;
 import net.yuurraa.averiummod.item.ModCreativeModTabs;
 import net.yuurraa.averiummod.item.ModItems;
 import net.yuurraa.averiummod.particle.ModParticles;
 // No specific worldgen imports needed here for registration itself
 import org.slf4j.Logger;
 import top.theillusivec4.curios.api.*;
-import top.theillusivec4.curios.api.type.capability.ICurio;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 @Mod(AveriumMod.MOD_ID)
 public class AveriumMod {

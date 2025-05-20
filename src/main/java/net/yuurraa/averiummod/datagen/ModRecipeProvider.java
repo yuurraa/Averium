@@ -24,11 +24,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
-        // Crython from Blasting Raw Crython
+        // Crython from Smelting/Blasting Raw Crython
         oreBlasting(consumer, List.of(ModItems.RAW_CRYTHON.get()), RecipeCategory.MISC, ModItems.UNSTABLE_CRYTHON.get(), 0.7f, 100, "crython_from_blasting_raw_crython");
-
-        // Crython from Smelting Raw Crython
         oreSmelting(consumer, List.of(ModItems.RAW_CRYTHON.get()), RecipeCategory.MISC, ModItems.UNSTABLE_CRYTHON.get(), 0.7f, 200, "crython_from_smelting_raw_crython");
+
+        // Infernium from Smelting/Blasting Raw Infernium
+        oreBlasting(consumer, List.of(ModItems.RAW_INFERNIUM.get()), RecipeCategory.MISC, ModItems.UNSTABLE_INFERNIUM.get(), 0.7f, 100, "infernium_from_blasting_raw_infernium");
+        oreSmelting(consumer, List.of(ModItems.RAW_INFERNIUM.get()), RecipeCategory.MISC, ModItems.UNSTABLE_INFERNIUM.get(), 0.7f, 200, "infernium_from_smelting_raw_infernium");
 
         // Gold Reinforced Stick Crafting
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.GOLD_REINFORCED_STICK.get(), 1)
@@ -41,13 +43,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT)) // Criterion to unlock the recipe
                 .unlockedBy("has_stick", has(Items.STICK))
                 .unlockedBy("has_leather", has(Items.LEATHER))
-                .save(consumer); // Default save location will be data/averiummod/recipes/gold_reinforced_stick.json (or similar based on result item name)
+                .save(consumer);
 
-        // Inert Charm Crafting
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.INERT_CHARM.get(), 1) // Category TOOLS or MISC is fine
-                .pattern(" S ") // Centered Gold Ingot at the top
-                .pattern("GAG") // Gold - Argon - Gold
-                .pattern("OMO") // String at the bottom for a cord
+        // Frost Ebber Crafting
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.FROST_EBBER.get(), 1)
+                .pattern(" S ")
+                .pattern("GAG")
+                .pattern("OMO")
                 .define('G', Items.GOLD_INGOT)
                 .define('A', ModItems.BOTTLED_ARGON.get())
                 .define('S', Items.STRING)
@@ -58,7 +60,24 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_string", has(Items.STRING))
                 .unlockedBy("has_obsidian", has(Items.OBSIDIAN))
                 .unlockedBy("has_amethyst_shard", has(Items.AMETHYST_SHARD))
-                .save(consumer, new ResourceLocation(AveriumMod.MOD_ID, "inert_charm_crafting")); // Filename for the recipe JSON
+                .save(consumer, new ResourceLocation(AveriumMod.MOD_ID, "frost_ebber_crafting"));
+
+        // Obsidian Stake Crafting
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.OBSIDIAN_STAKE.get(), 1)
+                .pattern(" S ")
+                .pattern("IAI")
+                .pattern("OMO")
+                .define('I', Items.IRON_INGOT)
+                .define('A', ModItems.BOTTLED_ARGON.get())
+                .define('S', Items.STRING)
+                .define('O', Items.OBSIDIAN)
+                .define('M', Items.AMETHYST_SHARD)
+                .unlockedBy("has_bottled_argon", has(ModItems.BOTTLED_ARGON.get())) // Unlock condition
+                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+                .unlockedBy("has_string", has(Items.STRING))
+                .unlockedBy("has_obsidian", has(Items.OBSIDIAN))
+                .unlockedBy("has_amethyst_shard", has(Items.AMETHYST_SHARD))
+                .save(consumer, new ResourceLocation(AveriumMod.MOD_ID, "obsidian_stake_crafting"));
     }
 
     // Helper methods for ore smelting/blasting (from Vanilla's RecipeProvider, adapted)

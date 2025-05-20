@@ -2,6 +2,7 @@
 package net.yuurraa.averiummod.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -12,9 +13,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.yuurraa.averiummod.item.ModItems; // Import ModItems
 import net.yuurraa.averiummod.particle.ModParticles;
-import net.minecraft.core.Direction;
-
+import top.theillusivec4.curios.api.CuriosApi; // Import CuriosApi
 
 public class CrythonOreBlock extends Block {
 
@@ -27,28 +28,30 @@ public class CrythonOreBlock extends Block {
 
     @Override
     public void attack(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer) {
-        // This method is called on both client and server when a player starts "attacking" (left-clicking) a block.
-        // We only want to apply the effect on the server side.
         if (!pLevel.isClientSide) {
-            // Apply Mining Fatigue I to the player
-            pPlayer.addEffect(new MobEffectInstance(
-                    MobEffects.DIG_SLOWDOWN,
-                    MINING_FATIGUE_DURATION,
-                    MINING_FATIGUE_AMPLIFIER,
-                    false, // ambient
-                    true,  // visible particles
-                    true   // show icon
-            ));
+            // Check if the player has the Frost Ebber equipped
+            boolean hasFrostEbber = CuriosApi.getCuriosHelper()
+                    .findFirstCurio(pPlayer, ModItems.FROST_EBBER.get())
+                    .isPresent();
+
+            if (!hasFrostEbber) { // Apply Mining Fatigue ONLY IF the charm is NOT equipped
+                pPlayer.addEffect(new MobEffectInstance(
+                        MobEffects.DIG_SLOWDOWN,
+                        MINING_FATIGUE_DURATION,
+                        MINING_FATIGUE_AMPLIFIER,
+                        false, true, true
+                ));
+            }
         }
-        super.attack(pState, pLevel, pPos, pPlayer); // Call super if it has any relevant logic (Block.attack is empty by default)
+        super.attack(pState, pLevel, pPos, pPlayer);
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
     public void animateTick(BlockState stateIn, Level levelIn, BlockPos posIn, RandomSource randIn) {
-        // Your existing particle logic
+        // ... (your existing particle logic) ...
         super.animateTick(stateIn, levelIn, posIn, randIn);
-        if (randIn.nextInt(5) == 0) {
+        if (randIn.nextInt(3) == 0) {
             for (Direction direction : Direction.values()) {
                 BlockPos adjacentPos = posIn.relative(direction);
                 if (!levelIn.getBlockState(adjacentPos).isSolidRender(levelIn, adjacentPos)) {

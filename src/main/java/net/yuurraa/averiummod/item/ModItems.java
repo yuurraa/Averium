@@ -13,9 +13,11 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, AveriumMod.MOD_ID);
 
-    // Equipable
-    public static final RegistryObject<Item> INERT_CHARM = ITEMS.register("inert_charm",
-            () -> new InertCharmItem(new Item.Properties().stacksTo(1)));
+    // Averium Charms
+    public static final RegistryObject<Item> FROST_EBBER = ITEMS.register("frost_ebber", // For Crython
+            () -> new FrostEbberItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> OBSIDIAN_STAKE = ITEMS.register("obsidian_stake", // For Infernium
+            () -> new ObsidianStakeItem(new Item.Properties().stacksTo(1)));
 
     // Crython
     public static final RegistryObject<Item> RAW_CRYTHON = ITEMS.register("raw_crython",

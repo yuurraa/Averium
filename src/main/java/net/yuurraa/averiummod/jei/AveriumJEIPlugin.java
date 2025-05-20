@@ -29,11 +29,18 @@ public class AveriumJEIPlugin implements IModPlugin {
      */
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        // Inert Charm
+        // Frost Ebber
         registration.addIngredientInfo(
-                new ItemStack(ModItems.INERT_CHARM.get()), // The item this info is about
+                new ItemStack(ModItems.FROST_EBBER.get()), // The item this info is about
                 VanillaTypes.ITEM_STACK, // The type of the ingredient
-                Component.translatable("jei.averiummod.info.inert_charm")
+                Component.translatable("jei.averiummod.info.frost_ebber")
+        );
+
+        // Obsidian Stake
+        registration.addIngredientInfo(
+                new ItemStack(ModItems.OBSIDIAN_STAKE.get()), // The item this info is about
+                VanillaTypes.ITEM_STACK, // The type of the ingredient
+                Component.translatable("jei.averiummod.info.obsidian_stake")
         );
 
         // --- How to obtain Bottled Argon ---

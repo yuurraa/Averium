@@ -22,8 +22,9 @@ public class ModItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        // Add 'inert_charm' to the 'curios:charm' item tag
+        // Add new charms to the 'curios:charm' item tag
         this.tag(ItemTags.create(new ResourceLocation("curios", "charm")))
-                .add(ModItems.INERT_CHARM.get());
+                .add(ModItems.FROST_EBBER.get()) // Add Frost Ebber
+                .add(ModItems.OBSIDIAN_STAKE.get()); // Add Obsidian Stake
     }
 }
