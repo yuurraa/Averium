@@ -45,10 +45,8 @@ public class ModPlacedFeatures {
 
 
         // CRYTHON_ORE PLACEMENT
-        // More sparse than diamonds. Diamonds typically have a CountPlacement around 7.
-        // For "more sparse", let's try CountPlacement of 1 or 2.
         var crythonOreModifiers = List.of(
-                CountPlacement.of(2), // Very few attempts per chunk
+                CountPlacement.of(20), // Set higher due to overlaps in biomes
                 InSquarePlacement.spread(),
                 // Diamond Y-level distribution: triangle shape, peak at bottom of world.
                 HeightRangePlacement.triangle(

@@ -33,10 +33,8 @@ public class ModBiomeModifiers {
                 GenerationStep.Decoration.UNDERGROUND_ORES));
 
         // CRYTHON_ORE
-        // Target cold biomes. Using Forge's IS_SNOWY tag is a good general choice.
-        // You could also use Tags.Biomes.IS_COLD_OVERWORLD or be more specific by listing individual biome tags.
         context.register(ADD_CRYTHON_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(Tags.Biomes.IS_SNOWY), // Using Forge's IS_SNOWY tag
+                biomes.getOrThrow(Tags.Biomes.IS_COLD_OVERWORLD), // Using Forge's IS_SNOWY tag
                 // Alternatively, for a broader cold definition: biomes.getOrThrow(Tags.Biomes.IS_COLD_OVERWORLD),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.CRYTHON_ORE_PLACED)),
                 GenerationStep.Decoration.UNDERGROUND_ORES));
