@@ -23,3 +23,50 @@ run
 
 # Files from Forge MDK
 forge*changelog.txt
+
+# Gradle
+.gradle/
+build/
+gradle-user-home/ # In case you set gradle user home locally, though typically ~/.gradle
+
+# IntelliJ IDEA
+.idea/
+shelf/ # IntelliJ's shelf feature
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Log files
+*.log
+logs/ # Typically created in the 'run' directory
+
+# Runtime directory (contains game files, saves, local configs during testing)
+# It's highly recommended to ignore this to prevent committing local test worlds,
+# large game assets, or generated configs that differ per user.
+run/
+# If you have specific configs in 'run/config' you *want* to share,
+# you can explicitly un-ignore them with !run/config/your_specific_config.toml
+# but generally, 'run/' is ignored.
+
+# Generated sources/resources
+# Your runData task outputs to 'src/generated/resources/'
+src/generated/
+
+# User-specific files from various tools
+*.swp # Vim swap files
+*~    # Backup files from some text editors
+*.bak
+*.tmp
+
+# Compressed files (if you build zips/jars locally outside of build/)
+# *.zip
+# *.jar # Be careful with this if your mod name is generic; usually build/libs is enough
+
+# Personal environment files (if any)
+# local.properties # Example, not standard for Forge
+# .env # Example
+
+# Other common temporary or cache files
+*.orig
