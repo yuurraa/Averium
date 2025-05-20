@@ -25,7 +25,7 @@ run
 forge*changelog.txt
 
 # Gradle
-.gradle/
+.gradle/*
 gradle/wrapper
 build/
 gradle-user-home/ # In case you set gradle user home locally, though typically ~/.gradle
@@ -46,7 +46,8 @@ logs/ # Typically created in the 'run' directory
 # Runtime directory (contains game files, saves, local configs during testing)
 # It's highly recommended to ignore this to prevent committing local test worlds,
 # large game assets, or generated configs that differ per user.
-run/
+run/*
+run-data/*
 # If you have specific configs in 'run/config' you *want* to share,
 # you can explicitly un-ignore them with !run/config/your_specific_config.toml
 # but generally, 'run/' is ignored.
