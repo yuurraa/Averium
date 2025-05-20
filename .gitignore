@@ -72,3 +72,9 @@ src/generated/
 
 # Other common temporary or cache files
 *.orig
+/.gradle/
+/.idea/
+/build/
+/gradle/
+/run/
+/run-data/
