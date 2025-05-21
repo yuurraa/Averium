@@ -17,29 +17,18 @@
   "item.averiummod.stable_infernium": "Stable Infernium",
 
   "item.averiummod.gold_reinforced_stick": "Gold-Reinforced Stick",
-  "item.averiummod.bottled_argon": "Bottled Argon",
-  "item.averiummod.bottled_xenon": "Bottled Xenon",
+
+  "item.averiummod.gas_cell": "Gas Cell",
+  "item.averiummod.argon_gas_cell": "Argon Gas Cell",
+  "item.averiummod.xenon_gas_cell": "Xenon Gas Cell",
+  "item.averiummod.xenon_matrix": "Xenon Matrix",
+  "item.averiummod.charged_xenon_matrix": "Charged Xenon Matrix",
 
   "particle.averiummod.argon_smoke": "Argon",
   "particle.averiummod.xenon_gas": "Xenon",
 
   "creativetab.averium_tab": "Averium",
 
-
-  "jei.averiummod.info.frost_ebber": "Nullifies the effects of raw and unstable Crython in the inventory when equipped as a Charm.",
-  "jei.averiummod.info.obsidian_stake": "Nullifies the effects of raw and unstable Infernium in the inventory when equipped as a Charm.",
-
-  "jei.averiummod.info.bottled_argon.line1": "Obtained by right-clicking an active Argon Vent with an empty Glass Bottle.",
-  "jei.averiummod.info.bottled_argon.line2": "Used in specialized material crafting processes.",
-  "jei.averiummod.info.glass_bottle.argon_vent": "Can be used on an Argon Vent to collect Bottled Argon.",
-  "jei.averiummod.info.argon_vent.interaction": "Right-click with a Glass Bottle to collect Bottled Argon when active. May cause nausea.",
-
-  "jei.averiummod.info.bottled_xenon.line1": "Obtained by right-clicking an active Xenon Vent with an empty Glass Bottle.",
-  "jei.averiummod.info.bottled_xenon.line2": "Used in specialized charm crafting processes.",
-  "jei.averiummod.info.glass_bottle.xenon_vent": "Can be used on an Xenon Vent to collect Bottled Xenon.",
-  "jei.averiummod.info.xenon_vent.interaction": "Right-click with a Glass Bottle to collect Bottled Xenon when active. May cause poison.",
-
-  "jei.averiummod.info.gold_reinforced_stick": "A stick reinforced with gold. Used for Argon Treatment.",
 
   "jei.averiummod.info.raw_crython.line1": "Obtained by mining Crython Ore or Deepslate Crython Ore.",
   "jei.averiummod.info.raw_crython.line2": "Requires a Diamond-tier Pickaxe or stronger.",
@@ -48,7 +37,7 @@
   "jei.averiummod.info.stable_crython": "Stabilised Crython, no longer inflicts slowness on the player when in inventory.",
   "jei.averiummod.info.crython_ore.drops": "Drops Raw Crython when mined with a Diamond-tier Pickaxe or stronger. Found in cold biomes.",
   "jei.averiummod.info.deepslate_crython_ore.drops": "Drops Raw Crython when mined with a Diamond-tier Pickaxe or stronger. Found in cold biomes.",
-  "jei.averiummod.info.crython_ore.info": "Slows the player in a radius, and applies Mining Fatigue when mined.",
+  "jei.averiummod.info.crython_ore.info": "Slows the player in a radius, and applies Mining Fatigue when mined. Nullified by Frost Ebber.",
 
   "jei.averiummod.info.raw_infernium.line1": "Obtained by mining Infernium Ore.",
   "jei.averiummod.info.raw_infernium.line2": "Requires a Diamond-tier Pickaxe or stronger.",
@@ -56,5 +45,21 @@
   "jei.averiummod.info.infernium_burn": "Periodically sets the player ablaze when in inventory without an Obsidian Stake. Stabilise to remove this effect.",
   "jei.averiummod.info.stable_infernium": "Stabilised Infernium, no longer sets the player ablaze when in inventory.",
   "jei.averiummod.info.infernium_ore.drops": "Drops Raw Infernium when mined with a Diamond-tier Pickaxe or stronger. Found in the Nether.",
-  "jei.averiummod.info.infernium_ore.info": "Periodically sets the player ablaze within a radius of it."
+  "jei.averiummod.info.infernium_ore.info": "Periodically sets the player ablaze within a radius of it. Nullified by Obsidian Stake.",
+
+  "jei.averiummod.info.frost_ebber": "Nullifies the effects of raw and unstable Crython in the inventory and its corresponding ores when equipped as a Charm.",
+  "jei.averiummod.info.obsidian_stake": "Nullifies the effects of raw and unstable Infernium in the inventory and its corresponding ore when equipped as a Charm.",
+
+  "jei.averiummod.info.gold_reinforced_stick": "A stick reinforced with gold. Used for Argon Treatment.",
+
+  "jei.averiummod.info.gas_cell.info": "A specialised container for gases. Usable on natural vents.",
+  "jei.averiummod.info.argon_gas_cell.line1": "Obtained by right-clicking an active Argon Vent with an empty Glass Bottle.",
+  "jei.averiummod.info.argon_gas_cell.line2": "Used in specialized material crafting processes.",
+  "jei.averiummod.info.argon_vent.interaction": "Right-click with a Gas Cell to collect a Argon Gas Cell when active. May cause nausea.",
+
+  "jei.averiummod.info.xenon_gas_cell.line1": "Obtained by right-clicking an active Xenon Vent with an empty Glass Bottle.",
+  "jei.averiummod.info.xenon_gas_cell.line2": "Used in specialized charm crafting processes.",
+  "jei.averiummod.info.xenon_vent.interaction": "Right-click with a Gas Cell to collect a Xenon Gas Cell when active. May cause poison.",
+  "jei.averiummod.info.xenon_matrix.info": "An empty Xenon Matrix. Unusable on its own until it is filled with Xenon.",
+  "jei.averiummod.info.charged_xenon_matrix.info": "A charged Xenon Matrix. Used to make specialised charms to combat the side effects of Averium metals."
 }

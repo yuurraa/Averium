@@ -43,28 +43,41 @@ public class AveriumJEIPlugin implements IModPlugin {
                 Component.translatable("jei.averiummod.info.obsidian_stake")
         );
 
-        // --- How to obtain Bottled Argon ---
+        // --- How to obtain Argon Gas Cell ---
         registration.addIngredientInfo(
-                new ItemStack(ModItems.BOTTLED_ARGON.get()), // The item this info is about
+                new ItemStack(ModItems.ARGON_GAS_CELL.get()), // The item this info is about
                 VanillaTypes.ITEM_STACK, // The type of the ingredient
-                Component.translatable("jei.averiummod.info.bottled_argon.line1"),
-                Component.translatable("jei.averiummod.info.bottled_argon.line2")
+                Component.translatable("jei.averiummod.info.argon_gas_cell.line1"),
+                Component.translatable("jei.averiummod.info.argon_gas_cell.line2")
         );
 
-        // --- How to obtain Bottled Xenon ---
+        // --- How to obtain Xenon Gas Cell ---
         registration.addIngredientInfo(
-                new ItemStack(ModItems.BOTTLED_XENON.get()), // The item this info is about
+                new ItemStack(ModItems.XENON_GAS_CELL.get()), // The item this info is about
                 VanillaTypes.ITEM_STACK, // The type of the ingredient
-                Component.translatable("jei.averiummod.info.bottled_xenon.line1"),
-                Component.translatable("jei.averiummod.info.bottled_xenon.line2")
+                Component.translatable("jei.averiummod.info.xenon_gas_cell.line1"),
+                Component.translatable("jei.averiummod.info.xenon_gas_cell.line2")
         );
 
-        // Add info to Glass Bottle about its use with vents
+        // Add info to Xenon Matrix
         registration.addIngredientInfo(
-                new ItemStack(Items.GLASS_BOTTLE),
+                new ItemStack(ModItems.XENON_MATRIX.get()),
                 VanillaTypes.ITEM_STACK,
-                Component.translatable("jei.averiummod.info.glass_bottle.argon_vent"),
-                Component.translatable("jei.averiummod.info.glass_bottle.xenon_vent")
+                Component.translatable("jei.averiummod.info.xenon_matrix.info")
+        );
+
+        // Add info to Charged Xenon Matrix
+        registration.addIngredientInfo(
+                new ItemStack(ModItems.CHARGED_XENON_MATRIX.get()),
+                VanillaTypes.ITEM_STACK,
+                Component.translatable("jei.averiummod.info.charged_xenon_matrix.info")
+        );
+
+        // Add info to Gas Cell about its use with vents
+        registration.addIngredientInfo(
+                new ItemStack(ModItems.GAS_CELL.get()),
+                VanillaTypes.ITEM_STACK,
+                Component.translatable("jei.averiummod.info.gas_cell.info")
         );
 
         // Add info to Argon Vent block about its interaction

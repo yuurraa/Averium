@@ -37,8 +37,12 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModItems.STABLE_INFERNIUM.get());
 
                         pOutput.accept(ModItems.GOLD_REINFORCED_STICK.get());
-                        pOutput.accept(ModItems.BOTTLED_ARGON.get());
-                        pOutput.accept(ModItems.BOTTLED_XENON.get());
+
+                        pOutput.accept(ModItems.GAS_CELL.get());
+                        pOutput.accept(ModItems.ARGON_GAS_CELL.get());
+                        pOutput.accept(ModItems.XENON_GAS_CELL.get());
+                        pOutput.accept(ModItems.XENON_MATRIX.get());
+                        pOutput.accept(ModItems.CHARGED_XENON_MATRIX.get());
                     })
                     .build());
 

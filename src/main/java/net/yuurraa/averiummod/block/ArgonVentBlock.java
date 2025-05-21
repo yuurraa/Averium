@@ -2,6 +2,8 @@
 package net.yuurraa.averiummod.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -97,29 +99,34 @@ public class ArgonVentBlock extends Block implements EntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos,
                                  Player player, InteractionHand hand, BlockHitResult hit) {
-        if (world.isClientSide) {
-            return player.getItemInHand(hand).getItem() == Items.GLASS_BOTTLE ? InteractionResult.sidedSuccess(true) : InteractionResult.PASS;
-        }
-
         ItemStack heldItemStack = player.getItemInHand(hand);
-        if (heldItemStack.getItem() == Items.GLASS_BOTTLE) {
+
+        if (heldItemStack.is(ModItems.GAS_CELL.get())) { // Check if holding an Empty Gas Cell
+            if (world.isClientSide) {
+                return InteractionResult.SUCCESS; // Client optimistic
+            }
+
             BlockEntity be = world.getBlockEntity(pos);
             if (be instanceof ArgonVentBlockEntity vent && vent.hasArgon()) {
-                vent.collectOne();
+                vent.collectOne(); // Consume one unit of gas from the vent BE
 
+                // Consume one Empty Gas Cell from player's hand
                 if (!player.getAbilities().instabuild) {
                     heldItemStack.shrink(1);
                 }
 
-                ItemStack bottledArgonStack = new ItemStack(ModItems.BOTTLED_ARGON.get());
-                if (!player.addItem(bottledArgonStack)) {
-                    player.drop(bottledArgonStack, false);
+                // Give player one Argon Gas Cell
+                ItemStack filledCellStack = new ItemStack(ModItems.ARGON_GAS_CELL.get());
+                if (!player.addItem(filledCellStack)) { // If inventory is full
+                    player.drop(filledCellStack, false); // Drop it in the world
                 }
+                world.playSound(null, pos, SoundEvents.RESPAWN_ANCHOR_CHARGE, SoundSource.BLOCKS, 0.7F, 1.2F + world.random.nextFloat() * 0.2F);
                 return InteractionResult.CONSUME;
             } else {
+                // Vent is empty or not the right type
                 return InteractionResult.FAIL;
             }
         }
-        return InteractionResult.PASS;
+        return InteractionResult.PASS; // If not holding an Empty Gas Cell
     }
 }

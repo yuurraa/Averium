@@ -3,6 +3,8 @@ package net.yuurraa.averiummod.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -115,24 +117,26 @@ public class XenonVentBlock extends HorizontalDirectionalBlock implements Entity
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos,
                                  Player player, InteractionHand hand, BlockHitResult hit) {
-        if (world.isClientSide) {
-            return player.getItemInHand(hand).getItem() == Items.GLASS_BOTTLE ? InteractionResult.sidedSuccess(true) : InteractionResult.PASS;
-        }
-
         ItemStack heldItemStack = player.getItemInHand(hand);
-        if (heldItemStack.getItem() == Items.GLASS_BOTTLE) {
+
+        if (heldItemStack.is(ModItems.GAS_CELL.get())) { // Check if holding an Empty Gas Cell
+            if (world.isClientSide) {
+                return InteractionResult.SUCCESS;
+            }
+
             BlockEntity be = world.getBlockEntity(pos);
             if (be instanceof XenonVentBlockEntity vent && vent.hasXenon()) {
-                vent.collectOneXenon();
+                vent.collectOneXenon(); // Consume one unit of xenon from the vent BE
 
                 if (!player.getAbilities().instabuild) {
                     heldItemStack.shrink(1);
                 }
 
-                ItemStack bottledXenonStack = new ItemStack(ModItems.BOTTLED_XENON.get());
-                if (!player.addItem(bottledXenonStack)) {
-                    player.drop(bottledXenonStack, false);
+                ItemStack filledCellStack = new ItemStack(ModItems.XENON_GAS_CELL.get()); // Give Xenon Gas Cell
+                if (!player.addItem(filledCellStack)) {
+                    player.drop(filledCellStack, false);
                 }
+                world.playSound(null, pos, SoundEvents.RESPAWN_ANCHOR_CHARGE, SoundSource.BLOCKS, 0.7F, 1.2F + world.random.nextFloat() * 0.2F);
                 return InteractionResult.CONSUME;
             } else {
                 return InteractionResult.FAIL;

@@ -40,44 +40,72 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('G', Items.GOLD_INGOT)
                 .define('S', Items.STICK)
                 .define('L', Items.LEATHER)
-                .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT)) // Criterion to unlock the recipe
+                .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
                 .unlockedBy("has_stick", has(Items.STICK))
                 .unlockedBy("has_leather", has(Items.LEATHER))
                 .save(consumer);
 
         // Frost Ebber Crafting
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.FROST_EBBER.get(), 1)
-                .pattern(" S ")
-                .pattern("GAG")
-                .pattern("OMO")
-                .define('G', Items.GOLD_INGOT)
-                .define('A', ModItems.BOTTLED_ARGON.get())
-                .define('S', Items.STRING)
-                .define('O', Items.OBSIDIAN)
+                .pattern("MAM")
+                .pattern("IPI")
+                .define('A', ModItems.CHARGED_XENON_MATRIX.get())
+                .define('P', Items.PRISMARINE_SHARD)
+                .define('I', Items.BLUE_ICE)
                 .define('M', Items.AMETHYST_SHARD)
-                .unlockedBy("has_bottled_argon", has(ModItems.BOTTLED_ARGON.get())) // Unlock condition
-                .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
-                .unlockedBy("has_string", has(Items.STRING))
-                .unlockedBy("has_obsidian", has(Items.OBSIDIAN))
+                .unlockedBy("has_charged_xenon_matrix_cell", has(ModItems.CHARGED_XENON_MATRIX.get()))
+                .unlockedBy("has_prismarine_shard", has(Items.PRISMARINE_SHARD))
+                .unlockedBy("has_blue_ice", has(Items.BLUE_ICE))
                 .unlockedBy("has_amethyst_shard", has(Items.AMETHYST_SHARD))
                 .save(consumer, new ResourceLocation(AveriumMod.MOD_ID, "frost_ebber_crafting"));
 
         // Obsidian Stake Crafting
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.OBSIDIAN_STAKE.get(), 1)
-                .pattern(" S ")
-                .pattern("IAI")
-                .pattern("OMO")
-                .define('I', Items.IRON_INGOT)
-                .define('A', ModItems.BOTTLED_ARGON.get())
-                .define('S', Items.STRING)
-                .define('O', Items.OBSIDIAN)
+                .pattern(" N ")
+                .pattern("OAO")
+                .pattern(" M ")
+                .define('N', Items.NETHERITE_SCRAP)
+                .define('A', ModItems.CHARGED_XENON_MATRIX.get())
+                .define('O', Items.CRYING_OBSIDIAN)
                 .define('M', Items.AMETHYST_SHARD)
-                .unlockedBy("has_bottled_argon", has(ModItems.BOTTLED_ARGON.get())) // Unlock condition
-                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
-                .unlockedBy("has_string", has(Items.STRING))
-                .unlockedBy("has_obsidian", has(Items.OBSIDIAN))
+                .unlockedBy("has_charged_xenon_matrix_cell", has(ModItems.CHARGED_XENON_MATRIX.get()))
+                .unlockedBy("has_netherite_scrap", has(Items.NETHERITE_SCRAP))
+                .unlockedBy("has_crying_obsidian", has(Items.CRYING_OBSIDIAN))
                 .unlockedBy("has_amethyst_shard", has(Items.AMETHYST_SHARD))
                 .save(consumer, new ResourceLocation(AveriumMod.MOD_ID, "obsidian_stake_crafting"));
+
+        // --- Gas Cell Recipe ---
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.GAS_CELL.get())
+                .pattern("IHI")
+                .pattern("IGI")
+                .pattern("IRI")
+                .define('I', Items.IRON_INGOT)
+                .define('H', Items.HOPPER)
+                .define('G', Items.GLASS_PANE)
+                .define('R', Items.REDSTONE)
+                .unlockedBy("has_hopper", has(Items.HOPPER))
+                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+                .unlockedBy("has_glass_pane", has(Items.GLASS_PANE))
+                .unlockedBy("has_redstone", has(Items.REDSTONE))
+                .save(consumer, new ResourceLocation(AveriumMod.MOD_ID, "gas_cell_crafting"));
+
+        // --- Empty Xenon Matrix Recipe ---
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.XENON_MATRIX.get())
+                .pattern(" Q ")
+                .pattern("QEQ")
+                .pattern(" Q ")
+                .define('Q', Items.QUARTZ)
+                .define('E', Items.ENDER_PEARL)
+                .unlockedBy("has_ender_pearl", has(Items.ENDER_PEARL))
+                .save(consumer, new ResourceLocation(AveriumMod.MOD_ID, "xenon_matrix_crafting"));
+
+        // --- Charged Xenon Matrix Recipe (using Xenon Gas Cell) ---
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CHARGED_XENON_MATRIX.get(), 1)
+                .requires(ModItems.XENON_MATRIX.get())
+                .requires(ModItems.XENON_GAS_CELL.get())
+                .unlockedBy("has_xenon_matrix", has(ModItems.XENON_MATRIX.get()))
+                .unlockedBy("has_xenon_gas_cell", has(ModItems.XENON_GAS_CELL.get()))
+                .save(consumer, new ResourceLocation(AveriumMod.MOD_ID, "charged_xenon_matrix_crafting"));
     }
 
     // Helper methods for ore smelting/blasting (from Vanilla's RecipeProvider, adapted)

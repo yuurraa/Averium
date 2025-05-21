@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "averiummod:item/bottled_xenon"
+    "layer0": "averiummod:item/gas_cell"
   }
 }

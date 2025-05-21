@@ -38,14 +38,22 @@ public class ModItems {
     // Processable
     public static final RegistryObject<Item> GOLD_REINFORCED_STICK = ITEMS.register("gold_reinforced_stick",
             () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> BOTTLED_ARGON = ITEMS.register("bottled_argon",
+
+    // Gases
+    public static final RegistryObject<Item> GAS_CELL = ITEMS.register("gas_cell",
+            () -> new Item(new Item.Properties().stacksTo(64))); // Empty cells can stack
+    public static final RegistryObject<Item> ARGON_GAS_CELL = ITEMS.register("argon_gas_cell",
             () -> new Item(new Item.Properties()
                     .stacksTo(16)
-                    .craftRemainder(Items.GLASS_BOTTLE)));
-    public static final RegistryObject<Item> BOTTLED_XENON = ITEMS.register("bottled_xenon",
+                    .craftRemainder(ModItems.GAS_CELL.get())));
+    public static final RegistryObject<Item> XENON_GAS_CELL = ITEMS.register("xenon_gas_cell",
             () -> new Item(new Item.Properties()
                     .stacksTo(16)
-                    .craftRemainder(Items.GLASS_BOTTLE)));
+                    .craftRemainder(ModItems.GAS_CELL.get())));
+    public static final RegistryObject<Item> XENON_MATRIX = ITEMS.register("xenon_matrix",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> CHARGED_XENON_MATRIX = ITEMS.register("charged_xenon_matrix",
+            () -> new Item(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
