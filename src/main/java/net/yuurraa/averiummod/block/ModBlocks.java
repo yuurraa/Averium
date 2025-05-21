@@ -26,7 +26,7 @@ public class ModBlocks {
             () -> new ArgonVentBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE).requiresCorrectToolForDrops()));
     // XENON VENT
     public static final RegistryObject<Block> XENON_VENT = registerBlock("xenon_vent",
-            () -> new XenonVentBlock(BlockBehaviour.Properties.copy(ModBlocks.ARGON_VENT.get())));
+            () -> new XenonVentBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE).requiresCorrectToolForDrops()));
 
     // CRYTHON ORE
     public static final RegistryObject<Block> CRYTHON_ORE = registerBlock("crython_ore",

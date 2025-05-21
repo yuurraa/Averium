@@ -15,6 +15,7 @@ import net.yuurraa.averiummod.AveriumMod;
 import net.yuurraa.averiummod.block.ModBlocks;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ModConfiguredFeatures {
     // ARGON_VENT
@@ -36,12 +37,12 @@ public class ModConfiguredFeatures {
         RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
         OreConfiguration argonVentConfig = new OreConfiguration(
                 List.of(OreConfiguration.target(deepslateReplaceables, ModBlocks.ARGON_VENT.get().defaultBlockState())),
-                4);
+                6);
         register(context, ARGON_VENT, Feature.ORE, argonVentConfig);
         // XENON_VENT
         OreConfiguration xenonVentConfig = new OreConfiguration(
                 List.of(OreConfiguration.target(deepslateReplaceables, ModBlocks.XENON_VENT.get().defaultBlockState())),
-                2);
+                4);
         register(context, XENON_VENT, Feature.ORE, xenonVentConfig);
 
 
@@ -51,7 +52,7 @@ public class ModConfiguredFeatures {
                 OreConfiguration.target(stoneReplaceables, ModBlocks.CRYTHON_ORE.get().defaultBlockState()),
                 OreConfiguration.target(deepslateReplaceables, ModBlocks.DEEPSLATE_CRYTHON_ORE.get().defaultBlockState())
         );
-        OreConfiguration crythonOreConfig = new OreConfiguration(crythonOres, 4); // Vein size of 3
+        OreConfiguration crythonOreConfig = new OreConfiguration(crythonOres, 4);
         register(context, CRYTHON_ORE, Feature.ORE, crythonOreConfig);
 
 

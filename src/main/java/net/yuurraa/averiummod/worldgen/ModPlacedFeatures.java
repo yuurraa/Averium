@@ -56,11 +56,11 @@ public class ModPlacedFeatures {
         // XENON_VENT PLACEMENT
         // Sparser (lower count) and slightly deeper than Argon Vents
         var xenonVentModifiers = List.of(
-                CountPlacement.of(6), // Sparser than Argon's 7
+                CountPlacement.of(6),
                 InSquarePlacement.spread(),
                 HeightRangePlacement.uniform(
-                        VerticalAnchor.absolute(-64), // Deepest
-                        VerticalAnchor.absolute(0)  // Max height, lower than Argon's 0
+                        VerticalAnchor.absolute(-64),
+                        VerticalAnchor.absolute(-24)
                 ),
                 // Same EnvironmentScan as Argon Vent if it should also face open air
                 EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.ONLY_IN_AIR_PREDICATE, 1),

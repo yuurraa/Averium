@@ -62,16 +62,7 @@ public class AveriumMod {
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            // Example: event.accept(ModItems.CRYTHON);
-        }
-        // Add your argon_vent block item to a creative tab
-        if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS || event.getTabKey() == ModCreativeModTabs.AVERIUM_TAB.getKey()) {
-            ModBlocks.ARGON_VENT.get();
-            if (ModBlocks.ARGON_VENT.get().asItem() != net.minecraft.world.item.Items.AIR) {
-                event.accept(ModBlocks.ARGON_VENT.get());
-            }
-        }
+
     }
 
     @SubscribeEvent

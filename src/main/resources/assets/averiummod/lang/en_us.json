@@ -52,7 +52,7 @@
 
   "jei.averiummod.info.gold_reinforced_stick": "A stick reinforced with gold. Used for Argon Treatment.",
 
-  "jei.averiummod.info.gas_cell.info": "A specialised container for gases. Usable on natural vents.",
+  "jei.averiummod.info.gas_cell.info": "A specialised container for gases. Can be used to store natural gas from vents.",
   "jei.averiummod.info.argon_gas_cell.line1": "Obtained by right-clicking an active Argon Vent with an empty Glass Bottle.",
   "jei.averiummod.info.argon_gas_cell.line2": "Used in specialized material crafting processes.",
   "jei.averiummod.info.argon_vent.interaction": "Right-click with a Gas Cell to collect a Argon Gas Cell when active. May cause nausea.",

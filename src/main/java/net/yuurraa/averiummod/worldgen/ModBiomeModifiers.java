@@ -43,14 +43,14 @@ public class ModBiomeModifiers {
 
         // CRYTHON_ORE
         context.register(ADD_CRYTHON_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(Tags.Biomes.IS_COLD_OVERWORLD), // Using Forge's IS_SNOWY tag
+                biomes.getOrThrow(Tags.Biomes.IS_COLD_OVERWORLD),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.CRYTHON_ORE_PLACED)),
                 GenerationStep.Decoration.UNDERGROUND_ORES));
         // INFERNIUM_ORE
         context.register(ADD_INFERNIUM_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(BiomeTags.IS_NETHER), // Target all Nether biomes
+                biomes.getOrThrow(BiomeTags.IS_NETHER),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.INFERNIUM_ORE_PLACED)),
-                GenerationStep.Decoration.UNDERGROUND_DECORATION // Nether ores often use this step
+                GenerationStep.Decoration.UNDERGROUND_DECORATION
         ));
     }
 
