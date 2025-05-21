@@ -48,13 +48,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         // Frost Ebber Crafting
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.FROST_EBBER.get(), 1)
                 .pattern("MAM")
-                .pattern("IPI")
+                .pattern("ICI")
                 .define('A', ModItems.CHARGED_XENON_MATRIX.get())
-                .define('P', Items.PRISMARINE_SHARD)
+                .define('C', ModItems.STABLE_CRYTHON.get())
                 .define('I', Items.BLUE_ICE)
                 .define('M', Items.AMETHYST_SHARD)
                 .unlockedBy("has_charged_xenon_matrix_cell", has(ModItems.CHARGED_XENON_MATRIX.get()))
-                .unlockedBy("has_prismarine_shard", has(Items.PRISMARINE_SHARD))
+                .unlockedBy("has_stable_crython", has(ModItems.STABLE_CRYTHON.get()))
                 .unlockedBy("has_blue_ice", has(Items.BLUE_ICE))
                 .unlockedBy("has_amethyst_shard", has(Items.AMETHYST_SHARD))
                 .save(consumer, new ResourceLocation(AveriumMod.MOD_ID, "frost_ebber_crafting"));
@@ -62,20 +62,22 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         // Obsidian Stake Crafting
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.OBSIDIAN_STAKE.get(), 1)
                 .pattern(" N ")
-                .pattern("OAO")
+                .pattern("OAI")
                 .pattern(" M ")
                 .define('N', Items.NETHERITE_SCRAP)
                 .define('A', ModItems.CHARGED_XENON_MATRIX.get())
                 .define('O', Items.CRYING_OBSIDIAN)
+                .define('I', ModItems.STABLE_INFERNIUM.get())
                 .define('M', Items.AMETHYST_SHARD)
                 .unlockedBy("has_charged_xenon_matrix_cell", has(ModItems.CHARGED_XENON_MATRIX.get()))
                 .unlockedBy("has_netherite_scrap", has(Items.NETHERITE_SCRAP))
                 .unlockedBy("has_crying_obsidian", has(Items.CRYING_OBSIDIAN))
+                .unlockedBy("has_stable_infernium", has(ModItems.STABLE_INFERNIUM.get()))
                 .unlockedBy("has_amethyst_shard", has(Items.AMETHYST_SHARD))
                 .save(consumer, new ResourceLocation(AveriumMod.MOD_ID, "obsidian_stake_crafting"));
 
         // --- Gas Cell Recipe ---
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.GAS_CELL.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.GAS_CELL.get(), 4)
                 .pattern("IHI")
                 .pattern("IGI")
                 .pattern("IRI")
