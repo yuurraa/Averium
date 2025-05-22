@@ -21,6 +21,7 @@ import net.yuurraa.averiummod.item.ModCreativeModTabs;
 import net.yuurraa.averiummod.item.ModItems;
 import net.yuurraa.averiummod.particle.ModParticles;
 // No specific worldgen imports needed here for registration itself
+import net.yuurraa.averiummod.screen.ModMenuTypes;
 import org.slf4j.Logger;
 import top.theillusivec4.curios.api.*;
 
@@ -38,6 +39,7 @@ public class AveriumMod {
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModParticles.register(modEventBus);
+        ModMenuTypes.register(modEventBus);;
 
         modEventBus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this); // For server events, etc.

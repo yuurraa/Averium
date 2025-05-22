@@ -23,9 +23,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        // Argon Vent - Drops nothing
         this.add(ModBlocks.ARGON_VENT.get(), noDrop());
         this.add(ModBlocks.XENON_VENT.get(), noDrop());
+        this.dropSelf(ModBlocks.INERT_INFUSER.get());
 
         // Crython Ores - Use the custom single drop method
         this.add(ModBlocks.CRYTHON_ORE.get(),

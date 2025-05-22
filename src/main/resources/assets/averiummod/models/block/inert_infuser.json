@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "averiummod:block/inert_infuser_top",
+    "front": "averiummod:block/inert_infuser_front",
+    "side": "averiummod:block/inert_infuser_side",
+    "bottom": "averiummod:block/inert_infuser_bottom"
+  }
+}

@@ -31,29 +31,36 @@ public class ModBlocks {
     // CRYTHON ORE
     public static final RegistryObject<Block> CRYTHON_ORE = registerBlock("crython_ore",
             () -> new CrythonOreBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.STONE) // Or a custom color
+                    .mapColor(MapColor.STONE)
                     .instrument(net.minecraft.world.level.block.state.properties.NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
-                    .strength(30.0F, 1200.0F) // Very hard, very blast resistant (like Ancient Debris)
+                    .strength(30.0F, 1200.0F)
                     .sound(SoundType.STONE)
             ));
     public static final RegistryObject<Block> DEEPSLATE_CRYTHON_ORE = registerBlock("deepslate_crython_ore",
             () -> new CrythonOreBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.DEEPSLATE) // Or a custom color
+                    .mapColor(MapColor.DEEPSLATE)
                     .instrument(net.minecraft.world.level.block.state.properties.NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
-                    .strength(45.0F, 1200.0F) // Even harder, very blast resistant
+                    .strength(45.0F, 1200.0F)
                     .sound(SoundType.DEEPSLATE)
             ));
 
     public static final RegistryObject<Block> INFERNIUM_ORE = registerBlock("infernium_ore",
             () -> new InferniumOreBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.NETHER) // Or MapColor.COLOR_RED, MapColor.COLOR_ORANGE
-                    .instrument(net.minecraft.world.level.block.state.properties.NoteBlockInstrument.BASEDRUM) // Same as Netherrack
+                    .mapColor(MapColor.NETHER)
+                    .instrument(net.minecraft.world.level.block.state.properties.NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
-                    .strength(20.0F, 1200.0F) // Tough like Ancient Debris, very blast resistant
-                    .sound(SoundType.NETHER_ORE) // Sounds like Nether Gold Ore
+                    .strength(20.0F, 1200.0F)
+                    .sound(SoundType.NETHER_ORE)
             ));
+
+    // INERT INFUSER
+    public static final RegistryObject<Block> INERT_INFUSER = registerBlock("inert_infuser",
+            () -> new InertInfuserBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK) // Or Blocks.IRON_BLOCK etc.
+                    .strength(5.0f, 6.0f) // Example strength
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion())); // Add .noOcclusion() if you plan to have transparent parts and don't want it to cull adjacent block faces unnecessarily
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {

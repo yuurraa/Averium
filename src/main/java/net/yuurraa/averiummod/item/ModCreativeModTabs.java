@@ -25,6 +25,8 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModBlocks.DEEPSLATE_CRYTHON_ORE.get());
                         pOutput.accept(ModBlocks.INFERNIUM_ORE.get());
 
+                        pOutput.accept(ModBlocks.INERT_INFUSER.get());
+
                         pOutput.accept(ModItems.FROST_EBBER.get());
                         pOutput.accept(ModItems.OBSIDIAN_STAKE.get());
 

@@ -5,6 +5,9 @@
   "block.averiummod.deepslate_crython_ore": "Deepslate Crython Ore",
   "block.averiummod.infernium_ore": "Infernium Ore",
 
+  "block.averiummod.inert_infuser": "Inert Infuser",
+  "container.averiummod.inert_infuser": "Inert Infuser",
+
   "item.averiummod.frost_ebber": "Frost Ebber",
   "item.averiummod.obsidian_stake": "Obsidian Stake",
 
