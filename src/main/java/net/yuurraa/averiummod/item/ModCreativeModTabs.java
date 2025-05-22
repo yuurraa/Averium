@@ -16,7 +16,7 @@ public class ModCreativeModTabs {
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, AveriumMod.MOD_ID);
 
     public static final RegistryObject<CreativeModeTab> AVERIUM_TAB = CREATIVE_MODE_TABS.register("averium_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.STABLE_CRYTHON.get()))
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.UNSTABLE_INFERNIUM.get()))
                     .title(Component.translatable("creativetab.averium_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModBlocks.ARGON_VENT.get());
