@@ -70,6 +70,25 @@ public class InertInfuserMenu extends AbstractContainerMenu {
                 public boolean mayPlace(@NotNull ItemStack stack) {
                     return false; // Cannot manually place items in output
                 }
+
+                @Override
+                public void onTake(Player player, ItemStack stack) {
+                    // Award experience
+                    float experience = blockEntity.getExperienceToAwardAndReset();
+                    if (experience > 0.0f) {
+                        if (experience > 0) { // Check to ensure some XP to give
+                            int expAmount = (int) Math.floor(experience); // Base XP
+                            float fractional = experience - expAmount;
+                            if (fractional > 0 && Math.random() < fractional) { // Handle fractional XP
+                                expAmount++;
+                            }
+                            if (expAmount > 0) {
+                                player.giveExperiencePoints(expAmount);
+                            }
+                        }
+                    }
+                    super.onTake(player, stack);
+                }
             });
             // Slot 4: Empty Cell Output Slot (New X: 134, Y: 32)
             this.addSlot(new SlotItemHandler(handler, InertInfuserBlockEntity.EMPTY_CELL_SLOT, 134, 32) {

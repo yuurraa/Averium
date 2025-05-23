@@ -43,6 +43,8 @@ public class InertInfuserBlockEntity extends BlockEntity implements MenuProvider
 
     private static final int INVENTORY_SIZE = 5;
 
+    private float experienceToAward = 0.0f;
+
     // ... (itemHandler remains the same) ...
     private final ItemStackHandler itemHandler = new ItemStackHandler(INVENTORY_SIZE) {
         @Override
@@ -161,6 +163,7 @@ public class InertInfuserBlockEntity extends BlockEntity implements MenuProvider
         nbt.putString("activeGasType", activeGasType);
         nbt.put("currentFuelItem", currentFuelItemStack.save(new CompoundTag()));
         nbt.putInt("activeGasRenderType", activeGasRenderType); // Save the new field
+        nbt.putFloat("experienceToAward", experienceToAward);
     }
 
     @Override
@@ -173,6 +176,7 @@ public class InertInfuserBlockEntity extends BlockEntity implements MenuProvider
         activeGasType = nbt.getString("activeGasType");
         currentFuelItemStack = ItemStack.of(nbt.getCompound("currentFuelItem"));
         activeGasRenderType = nbt.getInt("activeGasRenderType"); // Load the new field
+        experienceToAward = nbt.getFloat("experienceToAward");
     }
 
     public void drops() {
@@ -288,6 +292,7 @@ public class InertInfuserBlockEntity extends BlockEntity implements MenuProvider
                 pBlockEntity.itemHandler.extractItem(CATALYST_SLOT, 1, false);
                 ItemStack resultCopy = recipe.getResultItem(pLevel.registryAccess()).copy();
                 pBlockEntity.itemHandler.insertItem(OUTPUT_SLOT, resultCopy, false);
+                pBlockEntity.experienceToAward = recipe.getExperience(); // <--- ADD THIS LINE
                 pBlockEntity.progress = 0;
                 changed = true;
             }
@@ -338,5 +343,11 @@ public class InertInfuserBlockEntity extends BlockEntity implements MenuProvider
             return true;
         }
         return currentOutputStack.getCount() + amountToInsert <= Math.min(handler.getSlotLimit(OUTPUT_SLOT), currentOutputStack.getMaxStackSize());
+    }
+
+    public float getExperienceToAwardAndReset() {
+        float xp = this.experienceToAward;
+        this.experienceToAward = 0.0f;
+        return xp;
     }
 }
