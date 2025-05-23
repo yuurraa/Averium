@@ -104,6 +104,13 @@ public class AveriumJEIPlugin implements IModPlugin {
                 Component.translatable("jei.averiummod.info.xenon_vent.interaction")
         );
 
+        // Add info to Inert Infuser block about its interaction
+        registration.addIngredientInfo(
+                new ItemStack(ModBlocks.INERT_INFUSER.get()),
+                VanillaTypes.ITEM_STACK,
+                Component.translatable("jei.averiummod.info.inert_infuser")
+        );
+
         // Gold-Reinforced Stick
         registration.addIngredientInfo(
                 new ItemStack(ModItems.GOLD_REINFORCED_STICK.get()), // The item this info is about
@@ -130,7 +137,8 @@ public class AveriumJEIPlugin implements IModPlugin {
         registration.addIngredientInfo(
                 new ItemStack(ModItems.STABLE_CRYTHON.get()),
                 VanillaTypes.ITEM_STACK,
-                Component.translatable("jei.averiummod.info.stable_crython")
+                Component.translatable("jei.averiummod.info.stable_crython"),
+                Component.translatable("jei.averiummod.info.stable_crython.info")
         );
 
         // Add info to the Crython Ore blocks
@@ -167,7 +175,8 @@ public class AveriumJEIPlugin implements IModPlugin {
         registration.addIngredientInfo(
                 new ItemStack(ModItems.STABLE_INFERNIUM.get()),
                 VanillaTypes.ITEM_STACK,
-                Component.translatable("jei.averiummod.info.stable_infernium")
+                Component.translatable("jei.averiummod.info.stable_infernium"),
+                Component.translatable("jei.averiummod.info.stable_infernium.info")
         );
 
         // Add info to the Infernium Ore block

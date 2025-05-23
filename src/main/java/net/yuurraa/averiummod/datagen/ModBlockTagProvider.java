@@ -28,6 +28,12 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         this.tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(ModBlocks.XENON_VENT.get());
 
+        // Inert Infuser
+        this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(ModBlocks.INERT_INFUSER.get()); // Make it mineable with a pickaxe
+        this.tag(BlockTags.NEEDS_STONE_TOOL)
+                .add(ModBlocks.INERT_INFUSER.get()); // Requires a diamond pickaxe (or better)
+
         // Crython Ores
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.CRYTHON_ORE.get())

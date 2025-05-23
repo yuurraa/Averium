@@ -38,6 +38,7 @@
   "jei.averiummod.info.raw_crython.line3": "Found in cold biomes at deep Y-levels.",
   "jei.averiummod.info.crython_slow": "Inflicts slowness on the player when in inventory without a Frost Ebber. Stabilise to remove this effect.",
   "jei.averiummod.info.stable_crython": "Stabilised Crython, no longer inflicts slowness on the player when in inventory.",
+  "jei.averiummod.info.stable_crython.info": "Can only be stabilised in an Inert Infuser.",
   "jei.averiummod.info.crython_ore.drops": "Drops Raw Crython when mined with a Diamond-tier Pickaxe or stronger. Found in cold biomes.",
   "jei.averiummod.info.deepslate_crython_ore.drops": "Drops Raw Crython when mined with a Diamond-tier Pickaxe or stronger. Found in cold biomes.",
   "jei.averiummod.info.crython_ore.info": "Slows the player in a radius, and applies Mining Fatigue when mined. Nullified by Frost Ebber.",
@@ -47,6 +48,7 @@
   "jei.averiummod.info.raw_infernium.line3": "Found in the Nether.",
   "jei.averiummod.info.infernium_burn": "Periodically sets the player ablaze when in inventory without an Obsidian Stake. Stabilise to remove this effect.",
   "jei.averiummod.info.stable_infernium": "Stabilised Infernium, no longer sets the player ablaze when in inventory.",
+  "jei.averiummod.info.stable_infernium.info": "Can only be stabilised in an Inert Infuser.",
   "jei.averiummod.info.infernium_ore.drops": "Drops Raw Infernium when mined with a Diamond-tier Pickaxe or stronger. Found in the Nether.",
   "jei.averiummod.info.infernium_ore.info": "Periodically sets the player ablaze within a radius of it. Nullified by Obsidian Stake.",
 
@@ -64,5 +66,7 @@
   "jei.averiummod.info.xenon_gas_cell.line2": "Used in specialized charm crafting processes.",
   "jei.averiummod.info.xenon_vent.interaction": "Right-click with a Gas Cell to collect a Xenon Gas Cell when active. May cause poison.",
   "jei.averiummod.info.xenon_matrix.info": "An empty Xenon Matrix. Unusable on its own until it is filled with Xenon.",
-  "jei.averiummod.info.charged_xenon_matrix.info": "A charged Xenon Matrix. Used to make specialised charms to combat the side effects of Averium metals."
+  "jei.averiummod.info.charged_xenon_matrix.info": "A charged Xenon Matrix. Used to make specialised charms to combat the side effects of Averium metals.",
+
+  "jei.averiummod.info.inert_infuser": "A specialised station used to stabilise Averium metals. Requires a catalyst and gas cells to do so."
 }

@@ -10,6 +10,8 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft; // Import Minecraft for font renderer
+import net.minecraft.client.gui.Font; // Import Font
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -18,7 +20,6 @@ import net.yuurraa.averiummod.AveriumMod;
 import net.yuurraa.averiummod.block.ModBlocks;
 import net.yuurraa.averiummod.item.ModItems;
 import net.yuurraa.averiummod.recipe.InertInfuserRecipe;
-import net.yuurraa.averiummod.screen.InertInfuserMenu; // For progress bar width
 
 public class InertInfuserRecipeCategory implements IRecipeCategory<InertInfuserRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(AveriumMod.MOD_ID, "inert_infusing");
@@ -27,41 +28,75 @@ public class InertInfuserRecipeCategory implements IRecipeCategory<InertInfuserR
 
     private final IDrawable background;
     private final IDrawable icon;
-    private final IDrawable progressArrow;
-    private final IDrawable fuelBarFilledXenon; // Example for Xenon
-    private final IDrawable fuelBarFilledArgon;  // Example for Argon
+    private final IDrawable progressRectDrawable;
+    private final IDrawable progressTriDrawable;
+
+    // Fuel bar parts for Xenon
+    private final IDrawable fuelBarXenonTop;
+    private final IDrawable fuelBarXenonMiddle;
+    private final IDrawable fuelBarXenonBottom;
+
+    // Fuel bar parts for Argon
+    private final IDrawable fuelBarArgonTop;
+    private final IDrawable fuelBarArgonMiddle;
+    private final IDrawable fuelBarArgonBottom;
+
+    // Constants for original texture parts
+    private static final int PROGRESS_RECT_U = 176;
+    private static final int PROGRESS_RECT_V = 2;
+    private static final int PROGRESS_RECT_WIDTH = 30;
+    private static final int PROGRESS_RECT_HEIGHT = 4;
+
+    private static final int PROGRESS_TRI_U = 206;
+    private static final int PROGRESS_TRI_V = 0;
+    private static final int PROGRESS_TRI_WIDTH = 4;
+    private static final int PROGRESS_TRI_HEIGHT = 7;
+
+    // Constants for the fuel bar sprite on the texture sheet
+    private static final int FUEL_BAR_SPRITE_U = 176;
+    private static final int FUEL_BAR_SPRITE_XENON_V = 8;
+    private static final int FUEL_BAR_SPRITE_ARGON_V = 14; // XENON_V + 6
+    private static final int FUEL_BAR_SPRITE_WIDTH = 14;
+    private static final int FUEL_BAR_SPRITE_HEIGHT = 4;
+
+    private static final int BACKGROUND_WIDTH = 176; // Width of your background drawable
+
 
     public InertInfuserRecipeCategory(IGuiHelper guiHelper) {
-        // Dimensions of the relevant part of your GUI texture for recipes
-        // Adjust u, v, width, height as needed to capture the machine's recipe area
-        // e.g., width up to output slot, height to cover inputs and bars.
-        // Slots: Metal (25,19), Catalyst (25,45), Gas (61,51), Output (112,32)
-        // Progress bar: (63,27), Fuel bar: (86,57)
-        // Max X for slots is around 134+16 = 150. Max Y is around 51+16=67. Let's pick a background size.
-        // Width: 150, Height: 70. (0,0) UV for this section from main GUI.
-        ResourceLocation guiTexture = new ResourceLocation(AveriumMod.MOD_ID, "textures/gui/inert_infuser_gui.png");
-        this.background = guiHelper.createDrawable(guiTexture, 0, 0, 176, 83); // Changed from 150, 70
-
+        ResourceLocation guiTexture = new ResourceLocation(AveriumMod.MOD_ID, "textures/gui/inert_infuser_jei_gui.png");
+        this.background = guiHelper.createDrawable(guiTexture, 0, 0, BACKGROUND_WIDTH, 83); // Used BACKGROUND_WIDTH
         this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.INERT_INFUSER.get()));
 
-        // Progress arrow (filled part) - Ensure these UVs and dimensions are correct for your texture
-        this.progressArrow = guiHelper.createDrawable(guiTexture,
-                176, // U for filled rect part of arrow
-                2,   // V for filled rect part of arrow
-                InertInfuserMenu.PROGRESS_ARROW_TOTAL_SCALABLE_WIDTH, // total width
-                7); // Max height of progress arrow (triangle part is 7px high)
+        this.progressRectDrawable = guiHelper.createDrawable(guiTexture,
+                PROGRESS_RECT_U, PROGRESS_RECT_V,
+                PROGRESS_RECT_WIDTH, PROGRESS_RECT_HEIGHT);
+        this.progressTriDrawable = guiHelper.createDrawable(guiTexture,
+                PROGRESS_TRI_U, PROGRESS_TRI_V,
+                PROGRESS_TRI_WIDTH, PROGRESS_TRI_HEIGHT);
 
-        // Fuel bar textures - Ensure these UVs and dimensions are correct
-        this.fuelBarFilledXenon = guiHelper.createDrawable(guiTexture,
-                176, // FUEL_BAR_U
-                8,   // FUEL_BAR_XENON_V
-                14,  // FUEL_BAR_WIDTH_ON_SHEET
-                4);  // FUEL_BAR_HEIGHT_ON_SHEET
-        this.fuelBarFilledArgon = guiHelper.createDrawable(guiTexture,
-                176, // FUEL_BAR_U
-                14,  // FUEL_BAR_ARGON_V (XENON_V + 6)
-                14,
-                4);
+        // --- Create Fuel Bar Parts ---
+
+        // Xenon Fuel Bar Parts
+        this.fuelBarXenonTop = guiHelper.createDrawable(guiTexture,
+                FUEL_BAR_SPRITE_U + 1, FUEL_BAR_SPRITE_XENON_V, // U + 1, V
+                FUEL_BAR_SPRITE_WIDTH - 2, 1);                 // Width - 2, Height 1
+        this.fuelBarXenonMiddle = guiHelper.createDrawable(guiTexture,
+                FUEL_BAR_SPRITE_U, FUEL_BAR_SPRITE_XENON_V + 1, // U, V + 1
+                FUEL_BAR_SPRITE_WIDTH, FUEL_BAR_SPRITE_HEIGHT - 2); // Width, Height - 2
+        this.fuelBarXenonBottom = guiHelper.createDrawable(guiTexture,
+                FUEL_BAR_SPRITE_U + 1, FUEL_BAR_SPRITE_XENON_V + FUEL_BAR_SPRITE_HEIGHT - 1, // U + 1, V + Height - 1
+                FUEL_BAR_SPRITE_WIDTH - 2, 1);                 // Width - 2, Height 1
+
+        // Argon Fuel Bar Parts
+        this.fuelBarArgonTop = guiHelper.createDrawable(guiTexture,
+                FUEL_BAR_SPRITE_U + 1, FUEL_BAR_SPRITE_ARGON_V,
+                FUEL_BAR_SPRITE_WIDTH - 2, 1);
+        this.fuelBarArgonMiddle = guiHelper.createDrawable(guiTexture,
+                FUEL_BAR_SPRITE_U, FUEL_BAR_SPRITE_ARGON_V + 1,
+                FUEL_BAR_SPRITE_WIDTH, FUEL_BAR_SPRITE_HEIGHT - 2);
+        this.fuelBarArgonBottom = guiHelper.createDrawable(guiTexture,
+                FUEL_BAR_SPRITE_U + 1, FUEL_BAR_SPRITE_ARGON_V + FUEL_BAR_SPRITE_HEIGHT - 1,
+                FUEL_BAR_SPRITE_WIDTH - 2, 1);
     }
 
     @Override
@@ -86,14 +121,9 @@ public class InertInfuserRecipeCategory implements IRecipeCategory<InertInfuserR
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, InertInfuserRecipe recipe, IFocusGroup focuses) {
-        // Slot positions from your InertInfuserMenu/Screen, adjusted for JEI background
-        // These are relative to the background drawable's top-left (0,0)
-        // Metal Input (Original GUI: 25, 19)
         builder.addSlot(RecipeIngredientRole.INPUT, 25, 19).addIngredients(recipe.getIngredients().get(0));
-        // Catalyst Input (Original GUI: 25, 45)
         builder.addSlot(RecipeIngredientRole.INPUT, 25, 45).addIngredients(recipe.getIngredients().get(1));
 
-        // Gas Input - Represent with the corresponding gas cell item (Original GUI: 61, 51)
         ItemStack gasCellStack = ItemStack.EMPTY;
         if ("argon".equalsIgnoreCase(recipe.getRequiredGasType())) {
             gasCellStack = new ItemStack(ModItems.ARGON_GAS_CELL.get());
@@ -104,27 +134,37 @@ public class InertInfuserRecipeCategory implements IRecipeCategory<InertInfuserR
             builder.addSlot(RecipeIngredientRole.INPUT, 61, 51).addItemStack(gasCellStack);
         }
 
-        // Output (Original GUI: 112, 32)
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 112, 32).addItemStack(recipe.getResultItem(null)); // RegistryAccess can be null for getResultItem
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 112, 32).addItemStack(recipe.getResultItem(null));
     }
 
     @Override
     public void draw(InertInfuserRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        // Animate progress arrow and fuel bar
-        // Progress Bar (Original GUI X: 63, Y: 27)
-        progressArrow.draw(guiGraphics, 63, 27); // Static full arrow for JEI, or animate it
+        this.progressRectDrawable.draw(guiGraphics, 63, 27);
+        this.progressTriDrawable.draw(guiGraphics, 63 + PROGRESS_RECT_WIDTH, 25);
 
-        // Fuel Bar (Original GUI X: 86, Y: 57)
-        IDrawable currentFuelBar;
+        // Original screen draw position for the 14x4 fuel bar bounding box
+        int fuelBarScreenX = 86;
+        int fuelBarScreenY = 57;
+
         if ("argon".equalsIgnoreCase(recipe.getRequiredGasType())) {
-            currentFuelBar = fuelBarFilledArgon;
-        } else { // Default to Xenon if not argon or if gas type is different
-            currentFuelBar = fuelBarFilledXenon;
+            fuelBarArgonTop.draw(guiGraphics, fuelBarScreenX + 1, fuelBarScreenY);
+            fuelBarArgonMiddle.draw(guiGraphics, fuelBarScreenX, fuelBarScreenY + 1);
+            fuelBarArgonBottom.draw(guiGraphics, fuelBarScreenX + 1, fuelBarScreenY + FUEL_BAR_SPRITE_HEIGHT - 1);
+        } else { // Default to Xenon
+            fuelBarXenonTop.draw(guiGraphics, fuelBarScreenX + 1, fuelBarScreenY);
+            fuelBarXenonMiddle.draw(guiGraphics, fuelBarScreenX, fuelBarScreenY + 1);
+            fuelBarXenonBottom.draw(guiGraphics, fuelBarScreenX + 1, fuelBarScreenY + FUEL_BAR_SPRITE_HEIGHT - 1);
         }
-        currentFuelBar.draw(guiGraphics, 86, 57); // Static full fuel bar
 
-        // You can draw processing time or other info here too
-        Component timeString = Component.translatable("gui.jei.category.smelting.time.seconds", recipe.getProcessingTime() / 20);
-        guiGraphics.drawString(net.minecraft.client.Minecraft.getInstance().font, timeString, 60, 5, 0xFF808080, false); // Adjust position
+        // --- Centralize Time String ---
+        Font font = Minecraft.getInstance().font;
+        Component timeStringComponent = Component.translatable("gui.jei.category.smelting.time.seconds", recipe.getProcessingTime() / 20);
+        int stringWidth = font.width(timeStringComponent);
+        // Calculate the x position to center the string within the background width
+        int timeStringX = (BACKGROUND_WIDTH - stringWidth) / 2;
+        // Y position for the time string (currently 5, can be adjusted if needed)
+        int timeStringY = 5;
+
+        guiGraphics.drawString(font, timeStringComponent, timeStringX, timeStringY, 0xFF808080, false);
     }
 }

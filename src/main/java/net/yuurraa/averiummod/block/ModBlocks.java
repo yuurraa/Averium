@@ -57,7 +57,7 @@ public class ModBlocks {
 
     // INERT INFUSER
     public static final RegistryObject<Block> INERT_INFUSER = registerBlock("inert_infuser",
-            () -> new InertInfuserBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK) // Or Blocks.IRON_BLOCK etc.
+            () -> new InertInfuserBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK) // Or Blocks.IRON_BLOCK etc.
                     .strength(5.0f, 6.0f) // Example strength
                     .requiresCorrectToolForDrops()
                     .noOcclusion())); // Add .noOcclusion() if you plan to have transparent parts and don't want it to cull adjacent block faces unnecessarily
