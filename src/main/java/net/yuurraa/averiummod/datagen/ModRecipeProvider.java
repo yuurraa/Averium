@@ -1,17 +1,27 @@
 // src/main/java/net/yuurraa/averiummod/datagen/ModRecipeProvider.java
 package net.yuurraa.averiummod.datagen;
 
+// Correct Gson imports
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import net.minecraft.advancements.Advancement;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.yuurraa.averiummod.AveriumMod;
-import net.yuurraa.averiummod.item.ModItems; // Make sure this is your ModItems class
+import net.yuurraa.averiummod.item.ModItems;
+import net.yuurraa.averiummod.recipe.InertInfuserRecipe; // Import your recipe
+import net.yuurraa.averiummod.recipe.ModRecipeTypes;   // Import your recipe types
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -24,15 +34,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
-        // Crython from Smelting/Blasting Raw Crython
+        // --- Existing Recipes ---
         oreBlasting(consumer, List.of(ModItems.RAW_CRYTHON.get()), RecipeCategory.MISC, ModItems.UNSTABLE_CRYTHON.get(), 0.7f, 100, "crython_from_blasting_raw_crython");
         oreSmelting(consumer, List.of(ModItems.RAW_CRYTHON.get()), RecipeCategory.MISC, ModItems.UNSTABLE_CRYTHON.get(), 0.7f, 200, "crython_from_smelting_raw_crython");
 
-        // Infernium from Smelting/Blasting Raw Infernium
         oreBlasting(consumer, List.of(ModItems.RAW_INFERNIUM.get()), RecipeCategory.MISC, ModItems.UNSTABLE_INFERNIUM.get(), 0.7f, 100, "infernium_from_blasting_raw_infernium");
         oreSmelting(consumer, List.of(ModItems.RAW_INFERNIUM.get()), RecipeCategory.MISC, ModItems.UNSTABLE_INFERNIUM.get(), 0.7f, 200, "infernium_from_smelting_raw_infernium");
 
-        // Gold Reinforced Stick Crafting
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.GOLD_REINFORCED_STICK.get(), 1)
                 .pattern(" GS")
                 .pattern("GLG")
@@ -41,11 +49,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', Items.STICK)
                 .define('L', Items.LEATHER)
                 .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
-                .unlockedBy("has_stick", has(Items.STICK))
-                .unlockedBy("has_leather", has(Items.LEATHER))
+                // .unlockedBy("has_stick", has(Items.STICK)) // Not necessary to unlock by every ingredient usually
+                // .unlockedBy("has_leather", has(Items.LEATHER))
                 .save(consumer);
 
-        // Frost Ebber Crafting
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.FROST_EBBER.get(), 1)
                 .pattern("MAM")
                 .pattern("ICI")
@@ -53,13 +60,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('C', ModItems.STABLE_CRYTHON.get())
                 .define('I', Items.BLUE_ICE)
                 .define('M', Items.AMETHYST_SHARD)
-                .unlockedBy("has_charged_xenon_matrix_cell", has(ModItems.CHARGED_XENON_MATRIX.get()))
-                .unlockedBy("has_stable_crython", has(ModItems.STABLE_CRYTHON.get()))
-                .unlockedBy("has_blue_ice", has(Items.BLUE_ICE))
-                .unlockedBy("has_amethyst_shard", has(Items.AMETHYST_SHARD))
+                .unlockedBy("has_charged_xenon_matrix", has(ModItems.CHARGED_XENON_MATRIX.get()))
+                // .unlockedBy("has_stable_crython", has(ModItems.STABLE_CRYTHON.get()))
+                // .unlockedBy("has_blue_ice", has(Items.BLUE_ICE))
+                // .unlockedBy("has_amethyst_shard", has(Items.AMETHYST_SHARD))
                 .save(consumer, new ResourceLocation(AveriumMod.MOD_ID, "frost_ebber_crafting"));
 
-        // Obsidian Stake Crafting
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.OBSIDIAN_STAKE.get(), 1)
                 .pattern(" N ")
                 .pattern("OAI")
@@ -69,14 +75,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('O', Items.CRYING_OBSIDIAN)
                 .define('I', ModItems.STABLE_INFERNIUM.get())
                 .define('M', Items.AMETHYST_SHARD)
-                .unlockedBy("has_charged_xenon_matrix_cell", has(ModItems.CHARGED_XENON_MATRIX.get()))
-                .unlockedBy("has_netherite_scrap", has(Items.NETHERITE_SCRAP))
-                .unlockedBy("has_crying_obsidian", has(Items.CRYING_OBSIDIAN))
-                .unlockedBy("has_stable_infernium", has(ModItems.STABLE_INFERNIUM.get()))
-                .unlockedBy("has_amethyst_shard", has(Items.AMETHYST_SHARD))
+                .unlockedBy("has_charged_xenon_matrix", has(ModItems.CHARGED_XENON_MATRIX.get()))
+                // .unlockedBy("has_netherite_scrap", has(Items.NETHERITE_SCRAP))
+                // .unlockedBy("has_crying_obsidian", has(Items.CRYING_OBSIDIAN))
+                // .unlockedBy("has_stable_infernium", has(ModItems.STABLE_INFERNIUM.get()))
+                // .unlockedBy("has_amethyst_shard", has(Items.AMETHYST_SHARD))
                 .save(consumer, new ResourceLocation(AveriumMod.MOD_ID, "obsidian_stake_crafting"));
 
-        // --- Gas Cell Recipe ---
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.GAS_CELL.get(), 4)
                 .pattern("IHI")
                 .pattern("IGI")
@@ -86,12 +91,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('G', Items.GLASS_PANE)
                 .define('R', Items.REDSTONE)
                 .unlockedBy("has_hopper", has(Items.HOPPER))
-                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
-                .unlockedBy("has_glass_pane", has(Items.GLASS_PANE))
-                .unlockedBy("has_redstone", has(Items.REDSTONE))
+                // .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+                // .unlockedBy("has_glass_pane", has(Items.GLASS_PANE))
+                // .unlockedBy("has_redstone", has(Items.REDSTONE))
                 .save(consumer, new ResourceLocation(AveriumMod.MOD_ID, "gas_cell_crafting"));
 
-        // --- Empty Xenon Matrix Recipe ---
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.XENON_MATRIX.get())
                 .pattern(" Q ")
                 .pattern("QEQ")
@@ -99,18 +103,48 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('Q', Items.QUARTZ)
                 .define('E', Items.ENDER_PEARL)
                 .unlockedBy("has_ender_pearl", has(Items.ENDER_PEARL))
+                // .unlockedBy("has_quartz", has(Items.QUARTZ))
                 .save(consumer, new ResourceLocation(AveriumMod.MOD_ID, "xenon_matrix_crafting"));
 
-        // --- Charged Xenon Matrix Recipe (using Xenon Gas Cell) ---
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CHARGED_XENON_MATRIX.get(), 1)
                 .requires(ModItems.XENON_MATRIX.get())
                 .requires(ModItems.XENON_GAS_CELL.get())
                 .unlockedBy("has_xenon_matrix", has(ModItems.XENON_MATRIX.get()))
-                .unlockedBy("has_xenon_gas_cell", has(ModItems.XENON_GAS_CELL.get()))
+                // .unlockedBy("has_xenon_gas_cell", has(ModItems.XENON_GAS_CELL.get()))
                 .save(consumer, new ResourceLocation(AveriumMod.MOD_ID, "charged_xenon_matrix_crafting"));
+
+
+        // --- Inert Infuser Recipes ---
+        infuserRecipe(consumer,
+                Ingredient.of(ModItems.UNSTABLE_CRYTHON.get()),
+                Ingredient.of(Items.REDSTONE),
+                new ItemStack(ModItems.STABLE_CRYTHON.get()),
+                200,
+                "argon",
+                "stable_crython_from_unstable_via_infuser"
+        );
+
+        infuserRecipe(consumer,
+                Ingredient.of(ModItems.UNSTABLE_INFERNIUM.get()),
+                Ingredient.of(Items.GLOWSTONE_DUST),
+                new ItemStack(ModItems.STABLE_INFERNIUM.get()),
+                250,
+                "xenon",
+                "stable_infernium_from_unstable_via_infuser"
+        );
     }
 
-    // Helper methods for ore smelting/blasting (from Vanilla's RecipeProvider, adapted)
+    protected static void infuserRecipe(Consumer<FinishedRecipe> consumer, Ingredient metalInput, Ingredient catalystInput, ItemStack output, int processingTime, String gasType, String recipeName) {
+        consumer.accept(new InertInfuserFinishedRecipe(
+                new ResourceLocation(AveriumMod.MOD_ID, "inert_infusing/" + recipeName),
+                output,
+                metalInput,
+                catalystInput,
+                processingTime,
+                gasType
+        ));
+    }
+
     protected static void oreSmelting(Consumer<FinishedRecipe> pFinishedRecipeConsumer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup) {
         oreCooking(pFinishedRecipeConsumer, RecipeSerializer.SMELTING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, "_from_smelting");
     }
@@ -123,7 +157,67 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         for(ItemLike itemlike : pIngredients) {
             SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), pCategory, pResult, pExperience, pCookingTime, pSerializer)
                     .group(pGroup).unlockedBy(getHasName(itemlike), has(itemlike))
-                    .save(pFinishedRecipeConsumer, AveriumMod.MOD_ID + ":" + getItemName(pResult) + pRecipeNameSuffix + "_" + getItemName(itemlike));
+                    .save(pFinishedRecipeConsumer, new ResourceLocation(AveriumMod.MOD_ID, getItemName(pResult) + pRecipeNameSuffix + "_" + getItemName(itemlike)));
+        }
+    }
+
+    public static class InertInfuserFinishedRecipe implements FinishedRecipe {
+        private final ResourceLocation id;
+        private final ItemStack output;
+        private final Ingredient metalInput;
+        private final Ingredient catalystInput;
+        private final int processingTime;
+        private final String gasType;
+        // Advancement.Builder is from net.minecraft.advancements.Advancement
+        private final Advancement.Builder advancement = Advancement.Builder.advancement();
+
+        public InertInfuserFinishedRecipe(ResourceLocation id, ItemStack output, Ingredient metalInput, Ingredient catalystInput, int processingTime, String gasType) {
+            this.id = id;
+            this.output = output;
+            this.metalInput = metalInput;
+            this.catalystInput = catalystInput;
+            this.processingTime = processingTime;
+            this.gasType = gasType;
+        }
+
+        @Override
+        public void serializeRecipeData(JsonObject json) { // Parameter type changed to com.google.gson.JsonObject
+            JsonArray ingredientsArray = new JsonArray(); // com.google.gson.JsonArray
+            ingredientsArray.add(metalInput.toJson());    // toJson() returns com.google.gson.JsonElement
+            ingredientsArray.add(catalystInput.toJson());
+            json.add("ingredients", ingredientsArray);
+
+            JsonObject outputObject = new JsonObject(); // com.google.gson.JsonObject
+            outputObject.addProperty("item", ForgeRegistries.ITEMS.getKey(this.output.getItem()).toString());
+            if (this.output.getCount() > 1) {
+                outputObject.addProperty("count", this.output.getCount());
+            }
+            json.add("output", outputObject);
+
+            json.addProperty("processing_time", this.processingTime);
+            json.addProperty("gas_type", this.gasType);
+        }
+
+        @Override
+        public ResourceLocation getId() {
+            return this.id;
+        }
+
+        @Override
+        public RecipeSerializer<?> getType() {
+            return ModRecipeTypes.INERT_INFUSING_SERIALIZER.get();
+        }
+
+        @Nullable
+        @Override
+        public JsonObject serializeAdvancement() { // Return type changed to com.google.gson.JsonObject
+            return null;
+        }
+
+        @Nullable
+        @Override
+        public ResourceLocation getAdvancementId() {
+            return null;
         }
     }
 }

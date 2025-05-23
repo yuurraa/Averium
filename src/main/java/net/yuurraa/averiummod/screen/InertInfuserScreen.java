@@ -14,24 +14,26 @@ public class InertInfuserScreen extends AbstractContainerScreen<InertInfuserMenu
     private static final ResourceLocation TEXTURE =
             new ResourceLocation(AveriumMod.MOD_ID, "textures/gui/inert_infuser_gui.png");
 
-    // Updated UV coordinates and dimensions for FILLED parts from your texture sheet
-    // Progress Arrow Rectangle:
-    private static final int PROGRESS_RECT_U = 176;
-    private static final int PROGRESS_RECT_V = 2;
-    private static final int PROGRESS_RECT_WIDTH_ON_SHEET = 30;
-    private static final int PROGRESS_RECT_HEIGHT_ON_SHEET = 4; // Based on (176,2) to (205,5)
+    // Progress Arrow UVs and Dims (remain the same)
+    private static final int PROGRESS_RECT_U = 176; //
+    private static final int PROGRESS_RECT_V = 2; //
+    private static final int PROGRESS_RECT_WIDTH_ON_SHEET = 30; //
+    private static final int PROGRESS_RECT_HEIGHT_ON_SHEET = 4; //
 
-    // Progress Arrow Triangle:
-    private static final int PROGRESS_TRI_U = 206; // (209 - 4 + 1)
-    private static final int PROGRESS_TRI_V = 0;   // (Tip Y=3, Height 7 => Top V = 3 - floor(7/2) = 0)
-    private static final int PROGRESS_TRI_WIDTH_ON_SHEET = 4;
-    private static final int PROGRESS_TRI_HEIGHT_ON_SHEET = 7;
+    private static final int PROGRESS_TRI_U = 206; //
+    private static final int PROGRESS_TRI_V = 0; //
+    private static final int PROGRESS_TRI_WIDTH_ON_SHEET = 4; //
+    private static final int PROGRESS_TRI_HEIGHT_ON_SHEET = 7; //
 
-    // Fuel Bar (Gas Cell Fill):
-    private static final int FUEL_BAR_U = 176;
-    private static final int FUEL_BAR_V = 8;
-    private static final int FUEL_BAR_WIDTH_ON_SHEET = 14; // (189 - 176 + 1)
-    private static final int FUEL_BAR_HEIGHT_ON_SHEET = 4;  // (11 - 8 + 1)
+    // Fuel Bar (Gas Cell Fill) UVs and Dims
+    private static final int FUEL_BAR_U = 176; //
+    // V for Xenon (current/default)
+    private static final int FUEL_BAR_XENON_V = 8; // This was the original FUEL_BAR_V
+    // V for Argon (Xenon V + 6)
+    private static final int FUEL_BAR_ARGON_V = FUEL_BAR_XENON_V + 6; // 8 + 6 = 14
+
+    private static final int FUEL_BAR_WIDTH_ON_SHEET = 14; //
+    private static final int FUEL_BAR_HEIGHT_ON_SHEET = 4;  //
 
 
     public InertInfuserScreen(InertInfuserMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
@@ -53,42 +55,52 @@ public class InertInfuserScreen extends AbstractContainerScreen<InertInfuserMenu
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
-        guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight); // Draw main GUI background
+        guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
 
-        // Render progress bar
-        // On-screen positions: Rectangle (74,27), Triangle (104, 25)
+        // Render progress bar (using previously corrected X coordinates)
         if(menu.isCrafting()) {
-            int scaledProgress = menu.getScaledProgress(); // Value from 0 to InertInfuserMenu.PROGRESS_ARROW_TOTAL_SCALABLE_WIDTH (34)
-
-            // Draw rectangle part of the arrow
+            int scaledProgress = menu.getScaledProgress();
             int rectProgressToShow = Math.min(scaledProgress, PROGRESS_RECT_WIDTH_ON_SHEET);
             if (rectProgressToShow > 0) {
                 guiGraphics.blit(TEXTURE,
-                        x + 74, y + 27,               // Screen position (top-left of rect)
-                        PROGRESS_RECT_U, PROGRESS_RECT_V,  // Texture UV for filled rect
-                        rectProgressToShow, PROGRESS_RECT_HEIGHT_ON_SHEET); // Width (scaled), Height
+                        x + 63, y + 27, // Screen position
+                        PROGRESS_RECT_U, PROGRESS_RECT_V,
+                        rectProgressToShow, PROGRESS_RECT_HEIGHT_ON_SHEET);
             }
-
-            // Draw triangle part of the arrow if progress extends into it
             if (scaledProgress > PROGRESS_RECT_WIDTH_ON_SHEET) {
                 int triProgressToShow = Math.min(scaledProgress - PROGRESS_RECT_WIDTH_ON_SHEET, PROGRESS_TRI_WIDTH_ON_SHEET);
-                // Screen Y for triangle: y + 25 (to center 7px tall triangle against 4px tall rect at y+27)
-                // Rect center Y = 27 + (4/2) = 29. Triangle top Y = 29 - (7/2) = 25.5. Let's use 25.
                 guiGraphics.blit(TEXTURE,
-                        x + 74 + PROGRESS_RECT_WIDTH_ON_SHEET, y + 25,
+                        x + 63 + PROGRESS_RECT_WIDTH_ON_SHEET, y + 25, // Screen position
                         PROGRESS_TRI_U, PROGRESS_TRI_V,
                         triProgressToShow, PROGRESS_TRI_HEIGHT_ON_SHEET);
             }
         }
 
-        // Render fuel bar (assuming horizontal fill from left to right)
-        // On-screen: Top-left (97, 57), Width 14, Height 4.
-        int scaledFuelWidth = menu.getScaledFuel(); // Value from 0 to InertInfuserMenu.FUEL_BAR_SCALABLE_WIDTH (14)
+        // Render fuel bar (using previously corrected X coordinate: x + 86)
+        int scaledFuelWidth = menu.getScaledFuel();
         if (scaledFuelWidth > 0) {
-            guiGraphics.blit(TEXTURE,
-                    x + 97, y + 57,       // Screen pos (top-left of fuel bar area)
-                    FUEL_BAR_U, FUEL_BAR_V, // Texture UV of the filled bar part
-                    scaledFuelWidth, FUEL_BAR_HEIGHT_ON_SHEET); // Scaled Width, Full Height
+            int activeGasRenderType = menu.getActiveGasRenderType();
+            int fuelBarTextureV;
+
+            if (activeGasRenderType == 2) { // Argon
+                fuelBarTextureV = FUEL_BAR_ARGON_V;
+            } else if (activeGasRenderType == 1) { // Xenon (or default if type is 0 but fuel is somehow > 0)
+                fuelBarTextureV = FUEL_BAR_XENON_V;
+            } else {
+                // Default or fallback if activeGasRenderType is 0 (no gas) but scaledFuelWidth > 0
+                // This case should ideally not happen if logic is correct,
+                // but good to have a default. Could also choose not to render.
+                fuelBarTextureV = FUEL_BAR_XENON_V; // Or some "empty but active" texture if you had one
+                if (activeGasRenderType == 0) return; // Optionally, don't render if gas type is 0
+            }
+
+            // Only render if we have a valid gas type to show
+            if (activeGasRenderType != 0) { // Or check scaledFuelWidth > 0 && activeGasRenderType != 0
+                guiGraphics.blit(TEXTURE,
+                        x + 86, y + 57,       // Screen pos (top-left of fuel bar area)
+                        FUEL_BAR_U, fuelBarTextureV, // Use the CHOSEN V coordinate
+                        scaledFuelWidth, FUEL_BAR_HEIGHT_ON_SHEET);
+            }
         }
     }
 
