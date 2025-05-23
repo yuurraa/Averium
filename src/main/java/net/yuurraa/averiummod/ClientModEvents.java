@@ -20,6 +20,7 @@ public class ClientModEvents {
     // This is from your main mod class, ensure it's here or in a similar client setup event
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
+        System.out.println("AveriumMod: FMLClientSetupEvent fired!");
         event.enqueueWork(() -> {
             MenuScreens.register(ModMenuTypes.INERT_INFUSER_MENU.get(), InertInfuserScreen::new);
         });

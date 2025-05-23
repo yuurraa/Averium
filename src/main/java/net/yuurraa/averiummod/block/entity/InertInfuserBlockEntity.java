@@ -18,6 +18,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.yuurraa.averiummod.screen.InertInfuserMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -86,15 +87,12 @@ public class InertInfuserBlockEntity extends BlockEntity implements MenuProvider
     @Override
     public Component getDisplayName() {
         return Component.translatable("container.averiummod.inert_infuser");
-        // We'll add "container.averiummod.inert_infuser": "Inert Infuser" to en_us.json later
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        // We will create InertInfuserMenu.java later
-        // return new InertInfuserMenu(pContainerId, pPlayerInventory, this, this.data);
-        return null; // Placeholder for now
+        return new InertInfuserMenu(pContainerId, pPlayerInventory, this, this.data);
     }
 
     @NotNull

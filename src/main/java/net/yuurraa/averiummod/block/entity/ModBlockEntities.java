@@ -32,9 +32,13 @@ public class ModBlockEntities {
 
     // Add registration for InertInfuserBlockEntity
     public static final RegistryObject<BlockEntityType<InertInfuserBlockEntity>> INERT_INFUSER =
-            BLOCK_ENTITIES.register("inert_infuser_be", () ->
-                    BlockEntityType.Builder.of(InertInfuserBlockEntity::new,
-                            ModBlocks.INERT_INFUSER.get()).build(null));
+            BLOCK_ENTITIES.register("inert_infuser",
+                    () -> BlockEntityType.Builder.of(
+                                    InertInfuserBlockEntity::new,
+                                    ModBlocks.INERT_INFUSER.get()
+                            )
+                            .build(null)
+            );
 
 
     public static void register(IEventBus eventBus) {
