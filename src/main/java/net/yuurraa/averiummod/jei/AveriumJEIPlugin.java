@@ -4,19 +4,26 @@ package net.yuurraa.averiummod.jei;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes; // For ItemStack ingredients
+import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.yuurraa.averiummod.AveriumMod;
 import net.yuurraa.averiummod.block.ModBlocks;
 import net.yuurraa.averiummod.item.ModItems;
+import net.yuurraa.averiummod.recipe.InertInfuserRecipe;
 
-@JeiPlugin // Marks this class as a JEI plugin
+import java.util.List; // Add this
+
+@JeiPlugin
 public class AveriumJEIPlugin implements IModPlugin {
 
-    // Define a unique ID for your plugin
     private static final ResourceLocation PLUGIN_UID = new ResourceLocation(AveriumMod.MOD_ID, "jei_plugin");
 
     @Override
@@ -24,9 +31,12 @@ public class AveriumJEIPlugin implements IModPlugin {
         return PLUGIN_UID;
     }
 
-    /**
-     * This method is used to register new recipes, add ingredient information, etc.
-     */
+    @Override
+    public void registerCategories(IRecipeCategoryRegistration registration) {
+        IGuiHelper guiHelper = registration.getJeiHelpers().getGuiHelper();
+        registration.addRecipeCategories(new InertInfuserRecipeCategory(guiHelper));
+    }
+
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         // Frost Ebber
@@ -167,5 +177,15 @@ public class AveriumJEIPlugin implements IModPlugin {
                 Component.translatable("jei.averiummod.info.infernium_ore.drops"),
                 Component.translatable("jei.averiummod.info.infernium_ore.info")
         );
+
+
+        RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
+        List<InertInfuserRecipe> infuserRecipes = recipeManager.getAllRecipesFor(InertInfuserRecipe.Type.INSTANCE);
+        registration.addRecipes(InertInfuserRecipeCategory.RECIPE_TYPE, infuserRecipes);
+    }
+
+    @Override
+    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.INERT_INFUSER.get()), InertInfuserRecipeCategory.RECIPE_TYPE);
     }
 }

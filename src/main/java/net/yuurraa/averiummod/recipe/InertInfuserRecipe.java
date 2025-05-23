@@ -19,15 +19,23 @@ public class InertInfuserRecipe implements Recipe<SimpleContainer> {
     private final NonNullList<Ingredient> inputItems;
     private final ItemStack output;
     private final ResourceLocation id;
-    private final int processingTime; // Time in ticks for this recipe
-    private final String requiredGasType; // e.g., "argon" or "xenon"
+    private final int processingTime;
+    private final String requiredGasType;
+    private final float experience; // New field for XP
 
-    public InertInfuserRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> inputItems, int processingTime, String requiredGasType) {
+    public InertInfuserRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> inputItems, int processingTime, String requiredGasType, float experience) {
         this.id = id;
         this.output = output;
-        this.inputItems = inputItems; // Should contain metal and catalyst
+        this.inputItems = inputItems;
         this.processingTime = processingTime;
         this.requiredGasType = requiredGasType.toLowerCase();
+        this.experience = experience; // Store XP
+    }
+
+    // ... (matches, assemble, canCraftInDimensions, getResultItem, getIngredients, getProcessingTime, getRequiredGasType, getId, getType methods remain the same) ...
+
+    public float getExperience() { // Getter for XP
+        return this.experience;
     }
 
     @Override
@@ -35,22 +43,20 @@ public class InertInfuserRecipe implements Recipe<SimpleContainer> {
         if (pLevel.isClientSide()) {
             return false;
         }
-        // pContainer will have items from Metal Slot and Catalyst Slot
-        // Slot 0: Metal, Slot 1: Catalyst (based on how we'll check in BE)
-        if (inputItems.size() < 2) return false; // Ensure we have enough ingredients defined
+        if (inputItems.size() < 2) return false;
 
-        return inputItems.get(0).test(pContainer.getItem(0)) && // Metal slot
-                inputItems.get(1).test(pContainer.getItem(1));   // Catalyst slot
+        return inputItems.get(0).test(pContainer.getItem(0)) &&
+                inputItems.get(1).test(pContainer.getItem(1));
     }
 
     @Override
     public ItemStack assemble(SimpleContainer pContainer, RegistryAccess registryAccess) {
-        return output.copy(); // Return a copy to prevent modification of the recipe's output stack
+        return output.copy();
     }
 
     @Override
     public boolean canCraftInDimensions(int pWidth, int pHeight) {
-        return true; // Not a grid-based recipe
+        return true;
     }
 
     @Override
@@ -58,6 +64,7 @@ public class InertInfuserRecipe implements Recipe<SimpleContainer> {
         return output.copy();
     }
 
+    @Override
     public NonNullList<Ingredient> getIngredients() {
         return inputItems;
     }
@@ -85,14 +92,12 @@ public class InertInfuserRecipe implements Recipe<SimpleContainer> {
         return Type.INSTANCE;
     }
 
-    // Define the RecipeType
     public static class Type implements RecipeType<InertInfuserRecipe> {
         private Type() { }
         public static final Type INSTANCE = new Type();
-        public static final String ID = "inert_infusing"; // Matches the "type" in your recipe JSON
+        public static final String ID = "inert_infusing";
     }
 
-    // Define the RecipeSerializer
     public static class Serializer implements RecipeSerializer<InertInfuserRecipe> {
         public static final Serializer INSTANCE = new Serializer();
         public static final ResourceLocation ID = new ResourceLocation(AveriumMod.MOD_ID, "inert_infusing");
@@ -100,17 +105,18 @@ public class InertInfuserRecipe implements Recipe<SimpleContainer> {
         @Override
         public InertInfuserRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "output"));
-            int processingTime = GsonHelper.getAsInt(pSerializedRecipe, "processing_time", 200); // Default 200 ticks (10s)
-            String requiredGas = GsonHelper.getAsString(pSerializedRecipe, "gas_type", "argon"); // Default to argon
+            int processingTime = GsonHelper.getAsInt(pSerializedRecipe, "processing_time", 200);
+            String requiredGas = GsonHelper.getAsString(pSerializedRecipe, "gas_type", "argon");
+            float experience = GsonHelper.getAsFloat(pSerializedRecipe, "experience", 0.0F); // Read XP from JSON
 
             JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
-            NonNullList<Ingredient> inputs = NonNullList.withSize(ingredients.size(), Ingredient.EMPTY); // Expecting 2 inputs (metal, catalyst)
+            NonNullList<Ingredient> inputs = NonNullList.withSize(ingredients.size(), Ingredient.EMPTY);
 
             for (int i = 0; i < inputs.size(); i++) {
                 inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
             }
 
-            return new InertInfuserRecipe(pRecipeId, output, inputs, processingTime, requiredGas);
+            return new InertInfuserRecipe(pRecipeId, output, inputs, processingTime, requiredGas, experience);
         }
 
         @Override
@@ -122,7 +128,8 @@ public class InertInfuserRecipe implements Recipe<SimpleContainer> {
             ItemStack output = pBuffer.readItem();
             int processingTime = pBuffer.readInt();
             String gasType = pBuffer.readUtf();
-            return new InertInfuserRecipe(pRecipeId, output, inputs, processingTime, gasType);
+            float experience = pBuffer.readFloat(); // Read XP from buffer
+            return new InertInfuserRecipe(pRecipeId, output, inputs, processingTime, gasType, experience);
         }
 
         @Override
@@ -131,9 +138,10 @@ public class InertInfuserRecipe implements Recipe<SimpleContainer> {
             for (Ingredient ing : pRecipe.getIngredients()) {
                 ing.toNetwork(pBuffer);
             }
-            pBuffer.writeItemStack(pRecipe.getResultItem(RegistryAccess.EMPTY), false); // Use RegistryAccess.EMPTY for client-side simplicity
+            pBuffer.writeItemStack(pRecipe.getResultItem(RegistryAccess.EMPTY), false);
             pBuffer.writeInt(pRecipe.getProcessingTime());
             pBuffer.writeUtf(pRecipe.getRequiredGasType());
+            pBuffer.writeFloat(pRecipe.getExperience()); // Write XP to buffer
         }
     }
 }

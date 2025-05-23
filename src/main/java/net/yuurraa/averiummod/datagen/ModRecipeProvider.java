@@ -119,8 +119,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 Ingredient.of(ModItems.UNSTABLE_CRYTHON.get()),
                 Ingredient.of(Items.REDSTONE),
                 new ItemStack(ModItems.STABLE_CRYTHON.get()),
-                200,
-                "argon",
+                200, // processingTime
+                "argon", // gasType
+                0.7f, // experience
                 "stable_crython_from_unstable_via_infuser"
         );
 
@@ -128,20 +129,22 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 Ingredient.of(ModItems.UNSTABLE_INFERNIUM.get()),
                 Ingredient.of(Items.GLOWSTONE_DUST),
                 new ItemStack(ModItems.STABLE_INFERNIUM.get()),
-                250,
-                "xenon",
+                250, // processingTime
+                "xenon", // gasType
+                0.7f, // experience
                 "stable_infernium_from_unstable_via_infuser"
         );
     }
 
-    protected static void infuserRecipe(Consumer<FinishedRecipe> consumer, Ingredient metalInput, Ingredient catalystInput, ItemStack output, int processingTime, String gasType, String recipeName) {
+    protected static void infuserRecipe(Consumer<FinishedRecipe> consumer, Ingredient metalInput, Ingredient catalystInput, ItemStack output, int processingTime, String gasType, float experience, String recipeName) {
         consumer.accept(new InertInfuserFinishedRecipe(
                 new ResourceLocation(AveriumMod.MOD_ID, "inert_infusing/" + recipeName),
                 output,
                 metalInput,
                 catalystInput,
                 processingTime,
-                gasType
+                gasType,
+                experience // Pass experience
         ));
     }
 
@@ -168,26 +171,27 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         private final Ingredient catalystInput;
         private final int processingTime;
         private final String gasType;
-        // Advancement.Builder is from net.minecraft.advancements.Advancement
+        private final float experience; // New field
         private final Advancement.Builder advancement = Advancement.Builder.advancement();
 
-        public InertInfuserFinishedRecipe(ResourceLocation id, ItemStack output, Ingredient metalInput, Ingredient catalystInput, int processingTime, String gasType) {
+        public InertInfuserFinishedRecipe(ResourceLocation id, ItemStack output, Ingredient metalInput, Ingredient catalystInput, int processingTime, String gasType, float experience) {
             this.id = id;
             this.output = output;
             this.metalInput = metalInput;
             this.catalystInput = catalystInput;
             this.processingTime = processingTime;
             this.gasType = gasType;
+            this.experience = experience; // Store experience
         }
 
         @Override
-        public void serializeRecipeData(JsonObject json) { // Parameter type changed to com.google.gson.JsonObject
-            JsonArray ingredientsArray = new JsonArray(); // com.google.gson.JsonArray
-            ingredientsArray.add(metalInput.toJson());    // toJson() returns com.google.gson.JsonElement
+        public void serializeRecipeData(JsonObject json) {
+            JsonArray ingredientsArray = new JsonArray();
+            ingredientsArray.add(metalInput.toJson());
             ingredientsArray.add(catalystInput.toJson());
             json.add("ingredients", ingredientsArray);
 
-            JsonObject outputObject = new JsonObject(); // com.google.gson.JsonObject
+            JsonObject outputObject = new JsonObject();
             outputObject.addProperty("item", ForgeRegistries.ITEMS.getKey(this.output.getItem()).toString());
             if (this.output.getCount() > 1) {
                 outputObject.addProperty("count", this.output.getCount());
@@ -196,6 +200,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
             json.addProperty("processing_time", this.processingTime);
             json.addProperty("gas_type", this.gasType);
+            json.addProperty("experience", this.experience); // Serialize experience
         }
 
         @Override
@@ -205,12 +210,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         @Override
         public RecipeSerializer<?> getType() {
-            return ModRecipeTypes.INERT_INFUSING_SERIALIZER.get();
+            return ModRecipeTypes.INERT_INFUSING_SERIALIZER.get(); //
         }
 
         @Nullable
         @Override
-        public JsonObject serializeAdvancement() { // Return type changed to com.google.gson.JsonObject
+        public JsonObject serializeAdvancement() {
             return null;
         }
 
